@@ -27,8 +27,8 @@ export const cardStyle = {
 export const buttonBase = {
   border: 'none',
   borderRadius: 10,
-  padding: '12px 28px',
-  fontSize: 15,
+  padding: '10px 24px',
+  fontSize: 13,
   fontFamily: "'DM Sans', sans-serif",
   fontWeight: 600,
   cursor: 'pointer',

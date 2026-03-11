@@ -137,7 +137,7 @@ export function ContentPage({ title, onBack, children }) {
         </button>
 
         <div style={cardStyle}>
-          <h1 style={{ fontSize: 26, fontWeight: 700, color: colors.text, margin: '0 0 24px' }}>
+          <h1 style={{ fontSize: 22, fontWeight: 700, color: colors.text, margin: '0 0 20px' }}>
             {title}
           </h1>
           {children}
@@ -150,10 +150,10 @@ export function ContentPage({ title, onBack, children }) {
 function Section({ title, children }) {
   return (
     <div style={{ marginBottom: 28 }}>
-      <h3 style={{ fontSize: 18, fontWeight: 600, color: colors.text, marginBottom: 12, marginTop: 0 }}>
+      <h3 style={{ fontSize: 15, fontWeight: 600, color: colors.text, marginBottom: 10, marginTop: 0 }}>
         {title}
       </h3>
-      <div style={{ fontSize: 14, lineHeight: 1.7, color: colors.text }}>
+      <div style={{ fontSize: 13, lineHeight: 1.7, color: colors.text }}>
         {children}
       </div>
     </div>
@@ -173,7 +173,7 @@ function Example({ icon, title, text }) {
 }
 
 const subheading = {
-  fontSize: 15,
+  fontSize: 14,
   fontWeight: 600,
   color: colors.text,
   marginTop: 16,

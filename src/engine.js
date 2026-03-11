@@ -1,6 +1,6 @@
 /**
- * Simulation engine for the Dynamic Pricing Sandbox MVP.
- * Implements demand calculation, sales resolution, sentiment, and scoring.
+ * Simulation engine for the Dynamic Pricing Sandbox.
+ * Implements demand calculation, sales resolution, competitor AI, sentiment, and scoring.
  */
 
 /**
@@ -37,13 +37,32 @@ export function resolveSales(demand, currentPrice, remainingInventory) {
 }
 
 /**
- * Calculate customer sentiment (MVP simplified formula).
- * Based on price position within scenario range.
- * sentiment = 100 - ((currentPrice - minPrice) / (maxPrice - minPrice)) × 80
+ * Competitor AI: adjust competitor price each tick.
+ * - Random drift: ±3% of the price range
+ * - Directional pull toward user's price: +$2 if user is higher, −$1 if lower
+ * - Clamped within scenario's min/max price bounds
  */
-export function calculateSentiment(scenario, currentPrice) {
-  const ratio = (currentPrice - scenario.minPrice) / (scenario.maxPrice - scenario.minPrice);
-  const sentiment = 100 - ratio * 80;
+export function updateCompetitorPrice(scenario, competitorPrice, userPrice) {
+  const range = scenario.maxPrice - scenario.minPrice;
+  const drift = (Math.random() - 0.5) * 2 * 0.03 * range; // ±3% of range
+  const pull = userPrice > competitorPrice ? 2 : -1;
+  const newPrice = Math.round(competitorPrice + drift + pull);
+  return Math.max(scenario.minPrice, Math.min(scenario.maxPrice, newPrice));
+}
+
+/**
+ * Calculate customer sentiment (competitor-relative formula).
+ * sentiment = sentimentBase − (priceDifference / competitorPrice) × 60
+ * Where priceDifference = currentPrice − competitorPrice
+ */
+export function calculateSentiment(scenario, currentPrice, competitorPrice) {
+  if (!competitorPrice || competitorPrice <= 0) {
+    // Fallback to price-position formula if no competitor
+    const ratio = (currentPrice - scenario.minPrice) / (scenario.maxPrice - scenario.minPrice);
+    return Math.max(0, Math.min(100, 100 - ratio * 80));
+  }
+  const priceDiff = currentPrice - competitorPrice;
+  const sentiment = scenario.sentimentBase - (priceDiff / competitorPrice) * 60;
   return Math.max(0, Math.min(100, sentiment));
 }
 

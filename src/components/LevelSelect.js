@@ -14,17 +14,17 @@ export default function LevelSelect({ scores, onSelectLevel, onNavigate }) {
     <div style={{ minHeight: '100vh', background: colors.background, fontFamily: "'DM Sans', sans-serif" }}>
       <div style={{ maxWidth: 800, margin: '0 auto', padding: '40px 20px' }}>
         {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: 40 }}>
-          <h1 style={{ fontSize: 32, fontWeight: 700, color: colors.text, margin: 0 }}>
+        <div style={{ textAlign: 'center', marginBottom: 32 }}>
+          <h1 style={{ fontSize: 26, fontWeight: 700, color: colors.text, margin: 0 }}>
             Dynamic Pricing Sandbox
           </h1>
-          <p style={{ fontSize: 16, color: colors.textSecondary, marginTop: 8 }}>
+          <p style={{ fontSize: 14, color: colors.textSecondary, marginTop: 6 }}>
             Master the art of dynamic pricing across four industry scenarios
           </p>
         </div>
 
         {/* Scenario Cards */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           {scenarios.map((scenario, index) => {
             const unlocked = isUnlocked(index);
             const score = scores[index];
@@ -89,10 +89,10 @@ export default function LevelSelect({ scores, onSelectLevel, onNavigate }) {
                       Scenario {index + 1}
                     </span>
                   </div>
-                  <div style={{ fontSize: 18, fontWeight: 600, color: colors.text, marginTop: 2 }}>
+                  <div style={{ fontSize: 15, fontWeight: 600, color: colors.text, marginTop: 2 }}>
                     {scenario.name}
                   </div>
-                  <div style={{ fontSize: 13, color: colors.textSecondary, marginTop: 2 }}>
+                  <div style={{ fontSize: 12, color: colors.textSecondary, marginTop: 2 }}>
                     {scenario.subtitle}
                   </div>
                 </div>
@@ -131,9 +131,9 @@ export default function LevelSelect({ scores, onSelectLevel, onNavigate }) {
         <div style={{
           display: 'flex',
           justifyContent: 'center',
-          gap: 24,
-          marginTop: 48,
-          paddingTop: 24,
+          gap: 20,
+          marginTop: 40,
+          paddingTop: 20,
           borderTop: `1px solid ${colors.border}`,
         }}>
           <FooterLink label="What is Dynamic Pricing?" onClick={() => onNavigate('help')} />
@@ -157,7 +157,7 @@ function FooterLink({ label, onClick }) {
         background: 'none',
         border: 'none',
         color: colors.primary,
-        fontSize: 13,
+        fontSize: 12,
         cursor: 'pointer',
         fontFamily: "'DM Sans', sans-serif",
         padding: 0,
