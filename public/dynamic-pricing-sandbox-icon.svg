@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="iconBarGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+    <linearGradient id="iconCurveArea" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.04"/>
+    </linearGradient>
+    <linearGradient id="iconCurve" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f8faff"/>
+      <stop offset="100%" stop-color="#eff6ff"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect x="0" y="0" width="128" height="128" rx="28" fill="url(#bgGrad)" stroke="#dbeafe" stroke-width="1.5"/>
+
+  <!-- Grid lines -->
+  <line x1="24" y1="30" x2="24" y2="100" stroke="#e2e8f0" stroke-width="0.75" stroke-dasharray="2,3"/>
+  <line x1="44" y1="30" x2="44" y2="100" stroke="#e2e8f0" stroke-width="0.75" stroke-dasharray="2,3"/>
+  <line x1="64" y1="30" x2="64" y2="100" stroke="#e2e8f0" stroke-width="0.75" stroke-dasharray="2,3"/>
+  <line x1="84" y1="30" x2="84" y2="100" stroke="#e2e8f0" stroke-width="0.75" stroke-dasharray="2,3"/>
+  <line x1="104" y1="30" x2="104" y2="100" stroke="#e2e8f0" stroke-width="0.75" stroke-dasharray="2,3"/>
+
+  <!-- Area fill under curve -->
+  <path d="M24,86 C36,78 44,48 56,42 C68,36 76,58 86,48 C94,40 100,34 108,28 L108,100 L24,100 Z" fill="url(#iconCurveArea)"/>
+
+  <!-- Bar chart -->
+  <rect x="28" y="82" width="10" height="18" rx="2.5" fill="url(#iconBarGrad)" opacity="0.3"/>
+  <rect x="42" y="72" width="10" height="28" rx="2.5" fill="url(#iconBarGrad)" opacity="0.45"/>
+  <rect x="56" y="62" width="10" height="38" rx="2.5" fill="url(#iconBarGrad)" opacity="0.6"/>
+  <rect x="70" y="67" width="10" height="33" rx="2.5" fill="url(#iconBarGrad)" opacity="0.5"/>
+  <rect x="84" y="56" width="10" height="44" rx="2.5" fill="url(#iconBarGrad)" opacity="0.75"/>
+  <rect x="98" y="48" width="10" height="52" rx="2.5" fill="url(#iconBarGrad)" opacity="1"/>
+
+  <!-- Dynamic pricing curve line -->
+  <path d="M24,86 C36,78 44,48 56,42 C68,36 76,58 86,48 C94,40 100,34 108,28" fill="none" stroke="url(#iconCurve)" stroke-width="3.5" stroke-linecap="round"/>
+
+  <!-- Price point highlight -->
+  <circle cx="86" cy="48" r="9" fill="#3b82f6" fill-opacity="0.12"/>
+  <circle cx="86" cy="48" r="5" fill="#fff" stroke="#3b82f6" stroke-width="2.5"/>
+
+  <!-- Dollar sign -->
+  <text x="16" y="26" font-family="'DM Sans', system-ui, sans-serif" font-size="15" font-weight="800" fill="#3b82f6" opacity="0.45">$</text>
+</svg>

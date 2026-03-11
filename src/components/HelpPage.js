@@ -137,9 +137,16 @@ export function ContentPage({ title, onBack, children }) {
         </button>
 
         <div style={cardStyle}>
-          <h1 style={{ fontSize: 22, fontWeight: 700, color: colors.text, margin: '0 0 20px' }}>
-            {title}
-          </h1>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
+            <img
+              src={process.env.PUBLIC_URL + '/dynamic-pricing-sandbox-icon.svg'}
+              alt=""
+              style={{ width: 32, height: 32 }}
+            />
+            <h1 style={{ fontSize: 22, fontWeight: 700, color: colors.text, margin: 0 }}>
+              {title}
+            </h1>
+          </div>
           {children}
         </div>
       </div>

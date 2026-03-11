@@ -15,10 +15,12 @@ export default function LevelSelect({ scores, onSelectLevel, onNavigate }) {
       <div style={{ maxWidth: 800, margin: '0 auto', padding: '40px 20px' }}>
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
-          <h1 style={{ fontSize: 26, fontWeight: 700, color: colors.text, margin: 0 }}>
-            Dynamic Pricing Sandbox
-          </h1>
-          <p style={{ fontSize: 14, color: colors.textSecondary, marginTop: 6 }}>
+          <img
+            src={process.env.PUBLIC_URL + '/dynamic-pricing-sandbox-logo.svg'}
+            alt="Dynamic Pricing Sandbox"
+            style={{ height: 90, marginBottom: 6 }}
+          />
+          <p style={{ fontSize: 14, color: colors.textSecondary, marginTop: 0 }}>
             Master the art of dynamic pricing across four industry scenarios
           </p>
         </div>
