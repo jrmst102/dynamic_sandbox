@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { calculateGrade, getGradeMessage, getGradeColor } from '../engine';
-import { colors, cardStyle, primaryButton, secondaryButton } from '../styles';
+import { colors } from '../styles';
+import { Button, Card, Spinner } from '@jrmst102/ui-kit';
 
 const LLM_PROXY_URL = process.env.REACT_APP_LLM_PROXY_URL || '';
 
@@ -82,26 +83,28 @@ export default function Results({ scenario, totalRevenue, tickHistory, onRetry, 
   }, [requestFeedback]);
 
   return (
-    <div style={{ minHeight: '100vh', background: colors.background, fontFamily: "'DM Sans', sans-serif" }}>
-      <div style={{ maxWidth: 520, margin: '0 auto', padding: '60px 20px', textAlign: 'center' }}>
+    <div className="min-h-screen" style={{ background: colors.background, fontFamily: "'DM Sans', sans-serif" }}>
+      <div className="max-w-lg mx-auto text-center" style={{ padding: '60px 20px' }}>
         {/* Grade Badge */}
-        <div style={{
-          width: 100, height: 100, borderRadius: '50%', background: gradeColor, color: '#fff',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: 34, fontWeight: 800, margin: '0 auto 20px',
-          boxShadow: `0 8px 24px ${gradeColor}44`, fontFamily: "'DM Sans', sans-serif",
-        }}>
+        <div
+          className="flex items-center justify-center rounded-full text-white mx-auto mb-5"
+          style={{
+            width: 100, height: 100, background: gradeColor,
+            fontSize: 34, fontWeight: 800,
+            boxShadow: `0 8px 24px ${gradeColor}44`, fontFamily: "'DM Sans', sans-serif",
+          }}
+        >
           {grade}
         </div>
 
-        <h2 style={{ fontSize: 20, fontWeight: 700, color: colors.text, margin: '0 0 6px' }}>
+        <h2 className="text-xl font-bold mb-1" style={{ color: colors.text, margin: '0 0 6px' }}>
           {scenario.icon} {scenario.name}
         </h2>
-        <p style={{ fontSize: 14, color: colors.textSecondary, margin: '0 0 28px' }}>{message}</p>
+        <p className="text-sm mb-7" style={{ color: colors.textSecondary, margin: '0 0 28px' }}>{message}</p>
 
         {/* Revenue Breakdown */}
-        <div style={{ ...cardStyle, textAlign: 'left', marginBottom: 24 }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+        <Card className="text-left mb-6">
+          <div className="flex flex-col gap-3.5">
             <BreakdownRow label="Your Revenue" value={`$${totalRevenue.toLocaleString()}`} bold />
             <BreakdownRow label="Optimal Revenue" value={`$${scenario.optimalRevenue.toLocaleString()}`} />
             <div style={{ borderTop: `1px solid ${colors.border}`, paddingTop: 14 }}>
@@ -113,55 +116,52 @@ export default function Results({ scenario, totalRevenue, tickHistory, onRetry, 
               />
             </div>
           </div>
-        </div>
+        </Card>
 
         {/* LLM Feedback Card */}
         {LLM_PROXY_URL && (
-          <div style={{
-            ...cardStyle, textAlign: 'left', marginBottom: 24,
-            background: '#eff6ff', border: '1px solid #dbeafe',
-          }}>
-            <div style={{ fontSize: 12, fontWeight: 700, color: colors.textSecondary, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: 10 }}>
+          <Card className="text-left mb-6" style={{ background: colors.primaryBg, border: `1px solid ${colors.primaryLight}` }}>
+            <div className="text-xs font-bold uppercase tracking-wide mb-2.5" style={{ color: colors.textSecondary }}>
               🎓 AI Strategy Feedback
             </div>
             {llmLoading && (
-              <div style={{ textAlign: 'center', padding: '20px 0', color: colors.textSecondary }}>
-                <div style={{ fontSize: 24, marginBottom: 8 }}>⏳</div>
-                <div style={{ fontSize: 13 }}>Analyzing your pricing strategy...</div>
+              <div className="text-center py-5">
+                <Spinner size="sm" className="mx-auto mb-2" />
+                <div className="text-sm" style={{ color: colors.textSecondary }}>Analyzing your pricing strategy...</div>
               </div>
             )}
             {llmError && (
-              <div style={{ textAlign: 'center', padding: '16px 0' }}>
-                <p style={{ fontSize: 13, color: colors.textSecondary, marginBottom: 10 }}>
+              <div className="text-center py-4">
+                <p className="text-sm mb-2.5" style={{ color: colors.textSecondary }}>
                   Unable to generate feedback at this time.
                 </p>
-                <button onClick={requestFeedback} style={{ ...secondaryButton, fontSize: 12 }}>
+                <Button variant="secondary" size="sm" onClick={requestFeedback}>
                   Retry Analysis
-                </button>
+                </Button>
               </div>
             )}
             {llmFeedback && !llmLoading && (
-              <div style={{ fontSize: 13, color: colors.text, lineHeight: 1.7, whiteSpace: 'pre-wrap' }}>
+              <div className="text-sm leading-relaxed whitespace-pre-wrap" style={{ color: colors.text }}>
                 {llmFeedback}
               </div>
             )}
-          </div>
+          </Card>
         )}
 
         {/* Actions */}
-        <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-          <button onClick={onRetry} style={{ ...primaryButton, background: '#e2e8f0', color: colors.text }}>
+        <div className="flex gap-3 justify-center flex-wrap">
+          <Button variant="secondary" onClick={onRetry}>
             🔄 Retry Challenge
-          </button>
+          </Button>
           {passed && canAdvance && (
-            <button onClick={onNext} style={primaryButton}>
+            <Button variant="primary" onClick={onNext}>
               Next Scenario →
-            </button>
+            </Button>
           )}
         </div>
 
         {!passed && (
-          <p style={{ fontSize: 12, color: colors.textSecondary, marginTop: 16 }}>
+          <p className="text-xs mt-4" style={{ color: colors.textSecondary }}>
             Score 60% or higher to unlock the next scenario.
           </p>
         )}

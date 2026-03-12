@@ -1,7 +1,8 @@
 import React from 'react';
 import scenarios from '../scenarios';
-import { colors, cardStyle } from '../styles';
+import { colors } from '../styles';
 import { getGradeColor } from '../engine';
+import { Card, Button } from '@jrmst102/ui-kit';
 
 export default function LevelSelect({ scores, onSelectLevel, onNavigate }) {
   const isUnlocked = (index) => {
@@ -11,22 +12,23 @@ export default function LevelSelect({ scores, onSelectLevel, onNavigate }) {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: colors.background, fontFamily: "'DM Sans', sans-serif" }}>
-      <div style={{ maxWidth: 800, margin: '0 auto', padding: '40px 20px' }}>
+    <div className="min-h-screen" style={{ background: colors.background, fontFamily: "'DM Sans', sans-serif" }}>
+      <div className="max-w-3xl mx-auto px-5 py-10">
         {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: 32 }}>
+        <div className="text-center mb-8">
           <img
             src={process.env.PUBLIC_URL + '/dynamic-pricing-sandbox-logo.svg'}
             alt="Dynamic Pricing Sandbox"
             style={{ height: 90, marginBottom: 6 }}
+            className="inline-block"
           />
-          <p style={{ fontSize: 14, color: colors.textSecondary, marginTop: 0 }}>
+          <p className="text-sm mt-0" style={{ color: colors.textSecondary }}>
             Master the art of dynamic pricing across four industry scenarios
           </p>
         </div>
 
         {/* Scenario Cards */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <div className="flex flex-col gap-3">
           {scenarios.map((scenario, index) => {
             const unlocked = isUnlocked(index);
             const score = scores[index];
@@ -34,139 +36,82 @@ export default function LevelSelect({ scores, onSelectLevel, onNavigate }) {
             const gradeInfo = hasScore ? getGradeForScore(score) : null;
 
             return (
-              <button
+              <Card
                 key={scenario.id}
+                className={`!p-4 transition-all duration-150 ${unlocked ? 'cursor-pointer hover:shadow-md hover:-translate-y-0.5' : 'cursor-not-allowed'}`}
+                style={{ opacity: unlocked ? 1 : 0.5 }}
                 onClick={() => unlocked && onSelectLevel(index)}
-                disabled={!unlocked}
+                role="button"
                 aria-label={`${scenario.name}: ${unlocked ? 'unlocked' : 'locked'}`}
-                style={{
-                  ...cardStyle,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 16,
-                  border: 'none',
-                  cursor: unlocked ? 'pointer' : 'not-allowed',
-                  opacity: unlocked ? 1 : 0.5,
-                  textAlign: 'left',
-                  width: '100%',
-                  transition: 'transform 0.15s, box-shadow 0.15s',
-                  fontFamily: "'DM Sans', sans-serif",
-                }}
-                onMouseEnter={(e) => {
-                  if (unlocked) {
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.12)';
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = cardStyle.boxShadow;
-                }}
               >
-                {/* Icon */}
-                <div style={{
-                  fontSize: 36,
-                  width: 56,
-                  height: 56,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderRadius: 12,
-                  background: unlocked ? '#eff6ff' : '#f1f5f9',
-                  flexShrink: 0,
-                }}>
-                  {unlocked ? scenario.icon : '🔒'}
-                </div>
+                <div className="flex items-center gap-4">
+                  {/* Icon */}
+                  <div
+                    className="flex items-center justify-center rounded-xl flex-shrink-0"
+                    style={{
+                      fontSize: 36, width: 56, height: 56,
+                      background: unlocked ? colors.primaryBg : colors.border,
+                    }}
+                  >
+                    {unlocked ? scenario.icon : '🔒'}
+                  </div>
 
-                {/* Info */}
-                <div style={{ flex: 1 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <span style={{
-                      fontSize: 12,
-                      fontWeight: 600,
-                      color: colors.textSecondary,
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.05em',
-                    }}>
+                  {/* Info */}
+                  <div className="flex-1">
+                    <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: colors.textSecondary }}>
                       Scenario {index + 1}
                     </span>
+                    <div className="text-sm font-semibold mt-0.5" style={{ color: colors.text }}>
+                      {scenario.name}
+                    </div>
+                    <div className="text-xs mt-0.5" style={{ color: colors.textSecondary }}>
+                      {scenario.subtitle}
+                    </div>
                   </div>
-                  <div style={{ fontSize: 15, fontWeight: 600, color: colors.text, marginTop: 2 }}>
-                    {scenario.name}
-                  </div>
-                  <div style={{ fontSize: 12, color: colors.textSecondary, marginTop: 2 }}>
-                    {scenario.subtitle}
-                  </div>
+
+                  {/* Score badge */}
+                  {hasScore && gradeInfo && (
+                    <div className="text-center flex-shrink-0">
+                      <div
+                        className="flex items-center justify-center rounded-full text-white font-bold text-sm"
+                        style={{ width: 44, height: 44, background: getGradeColor(gradeInfo) }}
+                      >
+                        {gradeInfo}
+                      </div>
+                      <div className="mt-0.5" style={{ fontSize: 9, color: colors.textSecondary }}>
+                        {Math.round(score)}%
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Arrow */}
+                  {unlocked && !hasScore && (
+                    <div className="text-xl flex-shrink-0" style={{ color: colors.textSecondary }}>→</div>
+                  )}
                 </div>
-
-                {/* Score badge and best score */}
-                {hasScore && gradeInfo && (
-                  <div style={{ textAlign: 'center', flexShrink: 0 }}>
-                    <div style={{
-                      width: 44, height: 44, borderRadius: '50%',
-                      background: getGradeColor(gradeInfo), color: '#fff',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      fontWeight: 700, fontSize: 14,
-                    }}>
-                      {gradeInfo}
-                    </div>
-                    <div style={{ fontSize: 9, color: colors.textSecondary, marginTop: 2 }}>
-                      {Math.round(score)}%
-                    </div>
-                  </div>
-                )}
-
-                {/* Arrow */}
-                {unlocked && !hasScore && (
-                  <div style={{ color: colors.textSecondary, fontSize: 20, flexShrink: 0 }}>
-                    →
-                  </div>
-                )}
-              </button>
+              </Card>
             );
           })}
         </div>
 
         {/* Footer links */}
-        <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          gap: 20,
-          marginTop: 40,
-          paddingTop: 20,
-          borderTop: `1px solid ${colors.border}`,
-        }}>
-          <FooterLink label="What is Dynamic Pricing?" onClick={() => onNavigate('help')} />
-          <FooterLink label="Terms and Conditions" onClick={() => onNavigate('terms')} />
-          <FooterLink label="Privacy Policy" onClick={() => onNavigate('privacy')} />
+        <div className="flex justify-center gap-5 mt-10 pt-5" style={{ borderTop: `1px solid ${colors.border}` }}>
+          <Button variant="ghost" size="sm" onClick={() => onNavigate('help')} className="!text-xs underline">
+            What is Dynamic Pricing?
+          </Button>
+          <Button variant="ghost" size="sm" onClick={() => onNavigate('terms')} className="!text-xs underline">
+            Terms and Conditions
+          </Button>
+          <Button variant="ghost" size="sm" onClick={() => onNavigate('privacy')} className="!text-xs underline">
+            Privacy Policy
+          </Button>
         </div>
 
-        <div style={{ textAlign: 'center', marginTop: 16, fontSize: 12, color: colors.textSecondary }}>
+        <div className="text-center mt-4 text-xs" style={{ color: colors.textSecondary }}>
           © 2026 Dr. Jose Mendoza. All rights reserved.
         </div>
       </div>
     </div>
-  );
-}
-
-function FooterLink({ label, onClick }) {
-  return (
-    <button
-      onClick={onClick}
-      style={{
-        background: 'none',
-        border: 'none',
-        color: colors.primary,
-        fontSize: 12,
-        cursor: 'pointer',
-        fontFamily: "'DM Sans', sans-serif",
-        padding: 0,
-        textDecoration: 'underline',
-        textUnderlineOffset: 3,
-      }}
-    >
-      {label}
-    </button>
   );
 }
 

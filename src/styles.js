@@ -1,32 +1,37 @@
 /**
  * Shared style constants for the Dynamic Pricing Sandbox.
- * Design language: light, clean, minimal per spec §5.1.
+ * Uses design tokens from @jrmst102/shared-config.
  */
 
+import { colors as tokenColors, shadows, radii } from '@jrmst102/shared-config';
+
 export const colors = {
-  primary: '#3b82f6',
-  primaryDark: '#2563eb',
-  background: '#f8fafc',
+  primary: tokenColors.primary[500],
+  primaryDark: tokenColors.primary[600],
+  primaryLight: tokenColors.primary[100],
+  primaryBg: tokenColors.primary[50],
+  background: tokenColors.neutral[50],
   card: '#ffffff',
-  text: '#1e293b',
-  textSecondary: '#64748b',
-  border: '#e2e8f0',
-  success: '#10b981',
-  warning: '#f59e0b',
-  danger: '#ef4444',
-  locked: '#94a3b8',
+  text: tokenColors.neutral[900],
+  textSecondary: tokenColors.neutral[600],
+  border: tokenColors.neutral[200],
+  success: tokenColors.success,
+  warning: tokenColors.warning,
+  danger: tokenColors.error,
+  info: tokenColors.info,
+  locked: tokenColors.neutral[500],
 };
 
 export const cardStyle = {
   background: colors.card,
-  borderRadius: 14,
-  boxShadow: '0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06)',
+  borderRadius: radii.xl,
+  boxShadow: shadows.sm,
   padding: 20,
 };
 
 export const buttonBase = {
   border: 'none',
-  borderRadius: 10,
+  borderRadius: radii.lg,
   padding: '10px 24px',
   fontSize: 13,
   fontFamily: "'DM Sans', sans-serif",
@@ -43,6 +48,6 @@ export const primaryButton = {
 
 export const secondaryButton = {
   ...buttonBase,
-  background: '#e2e8f0',
+  background: tokenColors.neutral[200],
   color: colors.text,
 };

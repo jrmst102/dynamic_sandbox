@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { colors, cardStyle, primaryButton } from '../styles';
+import { colors } from '../styles';
 import { promotions } from '../scenarios';
+import { Card, Button } from '@jrmst102/ui-kit';
 
 const TICK_MODES = [
   { id: 'deliberate', label: 'Deliberate', interval: 300000, desc: '5 min/tick' },
@@ -25,45 +26,38 @@ export default function ScenarioBriefing({ scenario, onStart, onBack }) {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: colors.background, fontFamily: "'DM Sans', sans-serif" }}>
-      <div style={{ maxWidth: 800, margin: '0 auto', padding: '24px 20px 48px' }}>
+    <div className="min-h-screen" style={{ background: colors.background, fontFamily: "'DM Sans', sans-serif" }}>
+      <div className="max-w-3xl mx-auto px-5 pt-6 pb-12">
         {/* Back button */}
-        <button
-          onClick={onBack}
-          aria-label="Back to level select"
-          style={{
-            background: 'none', border: 'none', fontSize: 18, cursor: 'pointer',
-            color: colors.textSecondary, padding: '2px 6px', marginBottom: 16,
-          }}
-        >
+        <Button variant="ghost" size="sm" onClick={onBack} className="mb-4 !text-sm" aria-label="Back to level select">
           ← Back
-        </button>
+        </Button>
 
         {/* Title */}
-        <div style={{ textAlign: 'center', marginBottom: 28 }}>
-          <div style={{ fontSize: 48, marginBottom: 8 }}>{scenario.icon}</div>
-          <h1 style={{ fontSize: 24, fontWeight: 700, color: colors.text, margin: '0 0 4px' }}>
+        <div className="text-center mb-7">
+          <div className="text-5xl mb-2">{scenario.icon}</div>
+          <h1 className="text-2xl font-bold m-0" style={{ color: colors.text }}>
             {scenario.name}
           </h1>
-          <p style={{ fontSize: 14, color: colors.textSecondary, margin: 0 }}>
+          <p className="text-sm mt-1 mb-0" style={{ color: colors.textSecondary }}>
             {scenario.subtitle}
           </p>
         </div>
 
         {/* Situation Overview */}
-        <div style={{ ...cardStyle, marginBottom: 16 }}>
+        <Card className="mb-4">
           <SectionTitle>Situation Overview</SectionTitle>
           {scenario.briefing.overview.split('\n\n').map((para, i) => (
-            <p key={i} style={{ fontSize: 14, color: colors.text, lineHeight: 1.7, margin: i === 0 ? '8px 0 0' : '12px 0 0' }}>
+            <p key={i} className="text-sm leading-relaxed" style={{ color: colors.text, margin: i === 0 ? '8px 0 0' : '12px 0 0' }}>
               {para}
             </p>
           ))}
-        </div>
+        </Card>
 
         {/* Key Metrics */}
-        <div style={{ ...cardStyle, marginBottom: 16 }}>
+        <Card className="mb-4">
           <SectionTitle>Key Metrics</SectionTitle>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 10, marginTop: 12 }}>
+          <div className="grid gap-2.5 mt-3" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))' }}>
             <MetricCard label="Base Price" value={`$${scenario.basePrice}`} />
             <MetricCard label="Price Range" value={`$${scenario.minPrice}–$${scenario.maxPrice}`} />
             <MetricCard label="Inventory" value={`${scenario.initialInventory} ${scenario.unit}`} />
@@ -71,77 +65,71 @@ export default function ScenarioBriefing({ scenario, onStart, onBack }) {
             <MetricCard label="Optimal Revenue" value={`$${scenario.optimalRevenue.toLocaleString()}`} />
             <MetricCard label="Rounds" value={`${scenario.timeLimit}`} />
           </div>
-        </div>
+        </Card>
 
         {/* Competitor Intel */}
-        <div style={{ ...cardStyle, marginBottom: 16 }}>
+        <Card className="mb-4">
           <SectionTitle>🔍 Competitor Intelligence</SectionTitle>
-          <p style={{ fontSize: 14, color: colors.text, lineHeight: 1.7, margin: '8px 0 0' }}>
+          <p className="text-sm leading-relaxed mt-2 mb-0" style={{ color: colors.text }}>
             {scenario.briefing.competitorIntel}
           </p>
-        </div>
+        </Card>
 
         {/* Strategic Hints */}
-        <div style={{ ...cardStyle, marginBottom: 16 }}>
+        <Card className="mb-4">
           <SectionTitle>💡 Strategic Hints</SectionTitle>
-          <ul style={{ margin: '8px 0 0', paddingLeft: 20 }}>
+          <ul className="mt-2 mb-0 pl-5">
             {scenario.briefing.hints.map((hint, i) => (
-              <li key={i} style={{ fontSize: 14, color: colors.text, lineHeight: 1.7, marginBottom: 6 }}>
+              <li key={i} className="text-sm leading-relaxed mb-1.5" style={{ color: colors.text }}>
                 {hint}
               </li>
             ))}
           </ul>
-        </div>
+        </Card>
 
         {/* Available Tools */}
-        <div style={{ ...cardStyle, marginBottom: 16 }}>
+        <Card className="mb-4">
           <SectionTitle>🛠 Available Tools</SectionTitle>
-          <div style={{ marginTop: 10 }}>
+          <div className="mt-2.5">
             <MiniTool label="Discounts" desc="Apply 5–25% price reductions to boost demand through lower effective pricing." />
             <MiniTool label="Promotions" desc={`Run time-limited campaigns (${promotions.map(p => p.name).join(', ')}) to temporarily boost demand.`} />
             <MiniTool label="Bundle" desc={`${scenario.availableBundle.name}: +$${scenario.availableBundle.premium} price premium with ${((scenario.availableBundle.demandMultiplier - 1) * 100).toFixed(0)}% demand boost.`} />
           </div>
-        </div>
+        </Card>
 
         {/* Tick Mode Selector */}
-        <div style={{ ...cardStyle, marginBottom: 24 }}>
+        <Card className="mb-6">
           <SectionTitle>⏱ Simulation Pacing</SectionTitle>
-          <div style={{ display: 'flex', gap: 8, marginTop: 12, flexWrap: 'wrap' }} role="radiogroup" aria-label="Tick pacing mode">
+          <div className="flex gap-2 mt-3 flex-wrap" role="radiogroup" aria-label="Tick pacing mode">
             {TICK_MODES.map((mode) => (
               <button
                 key={mode.id}
                 role="radio"
                 aria-checked={tickMode === mode.id}
                 onClick={() => setTickMode(mode.id)}
+                className="flex-1 min-w-[140px] p-3 rounded-lg text-center transition-colors"
                 style={{
-                  flex: '1 1 140px',
-                  padding: '12px 14px',
                   border: tickMode === mode.id ? `2px solid ${colors.primary}` : `2px solid ${colors.border}`,
-                  borderRadius: 10,
-                  background: tickMode === mode.id ? '#eff6ff' : colors.card,
+                  background: tickMode === mode.id ? colors.primaryBg : colors.card,
                   cursor: 'pointer',
-                  textAlign: 'center',
                   fontFamily: "'DM Sans', sans-serif",
                 }}
               >
-                <div style={{ fontWeight: 600, fontSize: 14, color: tickMode === mode.id ? colors.primary : colors.text }}>
+                <div className="font-semibold text-sm" style={{ color: tickMode === mode.id ? colors.primary : colors.text }}>
                   {mode.label}
                 </div>
-                <div style={{ fontSize: 12, color: colors.textSecondary, marginTop: 2 }}>
+                <div className="text-xs mt-0.5" style={{ color: colors.textSecondary }}>
                   {mode.desc}
                 </div>
               </button>
             ))}
           </div>
-        </div>
+        </Card>
 
         {/* Start Button */}
-        <button
-          onClick={handleStart}
-          style={{ ...primaryButton, width: '100%', padding: '14px 24px', fontSize: 16 }}
-        >
+        <Button variant="primary" size="lg" onClick={handleStart} className="w-full !text-base">
           Begin Challenge
-        </button>
+        </Button>
       </div>
     </div>
   );

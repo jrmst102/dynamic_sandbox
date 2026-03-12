@@ -8,8 +8,9 @@ import {
   getCompetitorPrice, generateDemandCurve,
   calculateEffectivePrice, calculatePromotionMultiplier,
 } from '../engine';
-import { colors, cardStyle, primaryButton, secondaryButton } from '../styles';
+import { colors, cardStyle } from '../styles';
 import { promotions, discountLevels } from '../scenarios';
+import { Button, Select } from '@jrmst102/ui-kit';
 
 export default function Gameplay({ scenario, tickMode, onFinish, onBack }) {
   const tickInterval = tickMode ? tickMode.interval : 1200;
@@ -330,20 +331,16 @@ export default function Gameplay({ scenario, tickMode, onFinish, onBack }) {
           <div style={{ marginBottom: 14 }}>
             <div style={sectionLabel}>Discount</div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <select
-                value={discountPercent}
+              <Select
+                value={String(discountPercent)}
                 onChange={(e) => setDiscountPercent(Number(e.target.value))}
                 aria-label="Discount percentage"
-                style={{
-                  padding: '6px 10px', borderRadius: 8, border: `1px solid ${colors.border}`,
-                  fontFamily: "'DM Sans', sans-serif", fontSize: 13, background: colors.card,
-                  cursor: 'pointer',
-                }}
-              >
-                {discountLevels.map((d) => (
-                  <option key={d} value={d}>{d === 0 ? 'No discount' : `${d}% off`}</option>
-                ))}
-              </select>
+                options={discountLevels.map((d) => ({
+                  value: String(d),
+                  label: d === 0 ? 'No discount' : `${d}% off`,
+                }))}
+                className="!w-auto !py-1.5 !text-sm"
+              />
               {discountPercent > 0 && (
                 <span style={{ fontSize: 12, color: colors.textSecondary }}>
                   Saves customer ${(price * discountPercent / 100).toFixed(2)}
@@ -408,23 +405,24 @@ export default function Gameplay({ scenario, tickMode, onFinish, onBack }) {
         </div>
 
         {/* Controls */}
-        <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
+        <div className="flex gap-2 mb-3">
           {!started ? (
-            <button onClick={handleStart} style={{ ...primaryButton, fontSize: 13, padding: '10px 22px' }}>
+            <Button variant="primary" size="sm" onClick={handleStart}>
               ▶ Start Simulation
-            </button>
+            </Button>
           ) : (
-            <button onClick={handlePauseResume} style={{ ...(running ? secondaryButton : primaryButton), fontSize: 13, padding: '10px 22px' }}>
+            <Button variant={running ? 'secondary' : 'primary'} size="sm" onClick={handlePauseResume}>
               {running ? '⏸ Pause' : '▶ Resume'}
-            </button>
+            </Button>
           )}
-          <button
+          <Button
+            variant="secondary"
+            size="sm"
             onClick={() => setShowInsights((s) => !s)}
-            style={{ ...secondaryButton, fontSize: 13, padding: '10px 16px' }}
             aria-label="Toggle strategy insights panel"
           >
             💡 {showInsights ? 'Hide' : 'Show'} Insights
-          </button>
+          </Button>
         </div>
 
         {/* Stat Cards */}

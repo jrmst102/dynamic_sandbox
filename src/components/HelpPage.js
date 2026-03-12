@@ -1,5 +1,6 @@
 import React from 'react';
-import { colors, cardStyle } from '../styles';
+import { colors } from '../styles';
+import { Card, Button } from '@jrmst102/ui-kit';
 
 export default function HelpPage({ onBack }) {
   return (
@@ -113,42 +114,26 @@ export default function HelpPage({ onBack }) {
 // Shared content page wrapper
 export function ContentPage({ title, onBack, children }) {
   return (
-    <div style={{ minHeight: '100vh', background: colors.background, fontFamily: "'DM Sans', sans-serif" }}>
-      <div style={{ maxWidth: 800, margin: '0 auto', padding: '40px 20px' }}>
+    <div className="min-h-screen" style={{ background: colors.background, fontFamily: "'DM Sans', sans-serif" }}>
+      <div className="max-w-3xl mx-auto px-5 py-10">
         {/* Back navigation */}
-        <button
-          onClick={onBack}
-          aria-label="Back to level select"
-          style={{
-            background: 'none',
-            border: 'none',
-            fontSize: 14,
-            color: colors.primary,
-            cursor: 'pointer',
-            fontFamily: "'DM Sans', sans-serif",
-            marginBottom: 24,
-            padding: 0,
-            display: 'flex',
-            alignItems: 'center',
-            gap: 6,
-          }}
-        >
+        <Button variant="ghost" size="sm" onClick={onBack} className="mb-6 !text-sm" aria-label="Back to level select">
           ← Back to Level Select
-        </button>
+        </Button>
 
-        <div style={cardStyle}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
+        <Card>
+          <div className="flex items-center gap-2.5 mb-5">
             <img
               src={process.env.PUBLIC_URL + '/dynamic-pricing-sandbox-icon.svg'}
               alt=""
               style={{ width: 32, height: 32 }}
             />
-            <h1 style={{ fontSize: 22, fontWeight: 700, color: colors.text, margin: 0 }}>
+            <h1 className="text-xl font-bold m-0" style={{ color: colors.text }}>
               {title}
             </h1>
           </div>
           {children}
-        </div>
+        </Card>
       </div>
     </div>
   );
