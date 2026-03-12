@@ -55,7 +55,8 @@ npm start        # serves the build/ directory on port 8080
 | Package | Source | Purpose |
 |---------|--------|---------|
 | `@jrmst102/ui-kit` | GitHub Package Registry | Shared UI components |
-| `@jrmst102/shared-config` | GitHub Package Registry | Design tokens and configuration |
+| `@jrmst102/shared-config` | GitHub Package Registry | Design tokens (colors, shadows, radii) |
+| `tailwindcss` | npm | Utility-first CSS framework (required by ui-kit) |
 | `react`, `react-dom` | npm | UI framework |
 | `recharts` | npm | Charting library |
 | `serve` | npm | Static file server (production) |
@@ -125,9 +126,9 @@ The application is deployed as a static site on **DigitalOcean App Platform**, w
 |-------|-----------|
 | Framework | React 19 (functional components, hooks) |
 | Charting | Recharts 3 |
-| UI Components | `@jrmst102/ui-kit` (GitHub Package Registry) |
-| Design Tokens | `@jrmst102/shared-config` (GitHub Package Registry) |
-| Styling | Inline styles with shared design tokens |
+| UI Components | `@jrmst102/ui-kit` — Button, Card, Select, Spinner (GitHub Package Registry) |
+| Design Tokens | `@jrmst102/shared-config` — colors, shadows, radii (GitHub Package Registry) |
+| CSS Framework | Tailwind CSS 3 with shared-config color palette |
 | Fonts | DM Sans, DM Mono (Google Fonts CDN) |
 | LLM Integration | Anthropic API (Claude Sonnet 4) via serverless proxy |
 | Hosting | DigitalOcean App Platform |
@@ -140,8 +141,9 @@ src/
 ├── App.js                  # Main app — screen routing, state management
 ├── engine.js               # Simulation engine — demand, sales, sentiment, scoring
 ├── scenarios.js            # Scenario configurations, promotions, discount levels
-├── styles.js               # Shared design tokens and style constants
+├── styles.js               # Shared design tokens from @jrmst102/shared-config
 ├── index.js                # React entry point
+├── index.css               # Tailwind directives + ui-kit base styles
 └── components/
     ├── LevelSelect.js      # Level select menu with unlock state and best scores
     ├── ScenarioBriefing.js  # Pre-scenario briefing with metrics and tick mode selector
@@ -155,6 +157,8 @@ api/
 └── packages/llm/feedback/
     └── index.js             # Anthropic API proxy function
 .npmrc                       # GitHub Package Registry scope config
+tailwind.config.js           # Tailwind CSS config with shared-config colors
+postcss.config.js            # PostCSS config for Tailwind processing
 ```
 
 ## License
