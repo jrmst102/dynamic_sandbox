@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import scenarios from './scenarios';
 import { calculateGrade } from './engine';
 import LevelSelect from './components/LevelSelect';
+import ScenarioBriefing from './components/ScenarioBriefing';
 import Gameplay from './components/Gameplay';
 import Results from './components/Results';
 import HelpPage from './components/HelpPage';
@@ -9,21 +10,28 @@ import TermsPage from './components/TermsPage';
 import PrivacyPage from './components/PrivacyPage';
 
 export default function App() {
-  // Application state per spec §8.3
   const [screen, setScreen] = useState('menu');
   const [currentLevel, setCurrentLevel] = useState(0);
   const [scores, setScores] = useState({});
   const [gameKey, setGameKey] = useState(0);
   const [finalRevenue, setFinalRevenue] = useState(0);
+  const [tickMode, setTickMode] = useState(null);
+  const [tickHistory, setTickHistory] = useState([]);
 
   const handleSelectLevel = useCallback((index) => {
     setCurrentLevel(index);
+    setScreen('briefing');
+  }, []);
+
+  const handleStartFromBriefing = useCallback((mode) => {
+    setTickMode(mode);
     setGameKey((k) => k + 1);
     setScreen('playing');
   }, []);
 
-  const handleFinish = useCallback((revenue) => {
+  const handleFinish = useCallback((revenue, history) => {
     setFinalRevenue(revenue);
+    setTickHistory(history || []);
     const scenario = scenarios[currentLevel];
     const { efficiency } = calculateGrade(revenue, scenario.optimalRevenue);
 
@@ -39,15 +47,13 @@ export default function App() {
   }, [currentLevel]);
 
   const handleRetry = useCallback(() => {
-    setGameKey((k) => k + 1);
-    setScreen('playing');
+    setScreen('briefing');
   }, []);
 
   const handleNext = useCallback(() => {
     if (currentLevel < scenarios.length - 1) {
       setCurrentLevel((l) => l + 1);
-      setGameKey((k) => k + 1);
-      setScreen('playing');
+      setScreen('briefing');
     } else {
       setScreen('menu');
     }
@@ -72,6 +78,14 @@ export default function App() {
           onNavigate={handleNavigate}
         />
       );
+    case 'briefing':
+      return (
+        <ScenarioBriefing
+          scenario={scenario}
+          onStart={handleStartFromBriefing}
+          onBack={handleBack}
+        />
+      );
     case 'help':
       return <HelpPage onBack={handleBack} />;
     case 'terms':
@@ -83,6 +97,7 @@ export default function App() {
         <Gameplay
           key={gameKey}
           scenario={scenario}
+          tickMode={tickMode}
           onFinish={handleFinish}
           onBack={handleBack}
         />
@@ -92,6 +107,7 @@ export default function App() {
         <Results
           scenario={scenario}
           totalRevenue={finalRevenue}
+          tickHistory={tickHistory}
           onRetry={handleRetry}
           onNext={handleNext}
           canAdvance={currentLevel < scenarios.length - 1}

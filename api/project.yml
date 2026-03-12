@@ -1,0 +1,21 @@
+{
+  "packages": [
+    {
+      "name": "llm",
+      "functions": [
+        {
+          "name": "feedback",
+          "runtime": "nodejs:18",
+          "web": true,
+          "limits": {
+            "timeout": 15000,
+            "memory": 128
+          },
+          "environment": {
+            "ANTHROPIC_API_KEY": "${ANTHROPIC_API_KEY}"
+          }
+        }
+      ]
+    }
+  ]
+}

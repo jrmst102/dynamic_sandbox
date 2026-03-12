@@ -99,22 +99,20 @@ export default function LevelSelect({ scores, onSelectLevel, onNavigate }) {
                   </div>
                 </div>
 
-                {/* Score badge */}
+                {/* Score badge and best score */}
                 {hasScore && gradeInfo && (
-                  <div style={{
-                    width: 44,
-                    height: 44,
-                    borderRadius: '50%',
-                    background: getGradeColor(gradeInfo),
-                    color: '#fff',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontWeight: 700,
-                    fontSize: 14,
-                    flexShrink: 0,
-                  }}>
-                    {gradeInfo}
+                  <div style={{ textAlign: 'center', flexShrink: 0 }}>
+                    <div style={{
+                      width: 44, height: 44, borderRadius: '50%',
+                      background: getGradeColor(gradeInfo), color: '#fff',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      fontWeight: 700, fontSize: 14,
+                    }}>
+                      {gradeInfo}
+                    </div>
+                    <div style={{ fontSize: 9, color: colors.textSecondary, marginTop: 2 }}>
+                      {Math.round(score)}%
+                    </div>
                   </div>
                 )}
 
