@@ -4,14 +4,14 @@ An educational browser-based simulation for learning dynamic pricing strategy. A
 
 ## Scenarios
 
-| # | Scenario | Context | Elasticity |
-|---|----------|---------|------------|
-| 1 | **E-Commerce** 🛒 | Holiday flash sale on wireless headphones | 1.4 (High) |
-| 2 | **Airline Seats** ✈️ | Pricing a regional flight as departure approaches | 1.1 (Medium) |
-| 3 | **Hotel** 🏨 | Convention weekend room rate management | 0.9 (Low) |
-| 4 | **Event Tickets** 🎵 | Summer music festival ticket sales | 1.6 (Very High) |
+| # | Scenario | Context | Elasticity | Demand Base | Inventory | Optimal Revenue |
+|---|----------|---------|------------|-------------|-----------|-----------------|
+| 1 | **E-Commerce** 🛒 | Holiday flash sale on wireless headphones | 1.4 (High) | 4 | 200 units | $18,000 |
+| 2 | **Airline Seats** ✈️ | Pricing a regional flight as departure approaches | 1.1 (Medium) | 6 | 90 seats | $38,000 |
+| 3 | **Hotel** 🏨 | Convention weekend room rate management | 0.9 (Low) | 5 | 60 rooms | $28,000 |
+| 4 | **Event Tickets** 🎵 | Summer music festival ticket sales | 1.6 (Very High) | 8 | 500 tickets | $57,000 |
 
-Scenarios unlock sequentially — score 60% pricing efficiency or higher to advance.
+Scenarios unlock sequentially — score 60% pricing efficiency or higher to advance. Optimal revenue benchmarks are calibrated via dynamic programming so that passive play (no price changes) earns a failing grade, while active dynamic pricing with slider alone achieves B+/A.
 
 ## Features (v0.1.4)
 
@@ -30,20 +30,35 @@ Scenarios unlock sequentially — score 60% pricing efficiency or higher to adva
 
 **Prerequisites:** Node.js 22.x, npm 10.x
 
+This project uses private packages from the `@jrmst102` GitHub Package Registry scope. Configure access before installing:
+
 ```bash
+# Set up GitHub Package Registry access
+echo "@jrmst102:registry=https://npm.pkg.github.com" >> .npmrc
+export NODE_AUTH_TOKEN=<your-github-pat>
+
 npm install
-npm start
+npm run dev
 ```
 
-The app runs at `http://localhost:3000`.
+The dev server runs at `http://localhost:3000`.
 
-## Build for Production
+For production serving (used by DigitalOcean App Platform):
 
 ```bash
 npm run build
+npm start        # serves the build/ directory on port 8080
 ```
 
-The build output in `build/` is a static site ready for deployment.
+## Dependencies
+
+| Package | Source | Purpose |
+|---------|--------|---------|
+| `@jrmst102/ui-kit` | GitHub Package Registry | Shared UI components |
+| `@jrmst102/shared-config` | GitHub Package Registry | Design tokens and configuration |
+| `react`, `react-dom` | npm | UI framework |
+| `recharts` | npm | Charting library |
+| `serve` | npm | Static file server (production) |
 
 ## LLM Feedback Setup
 
@@ -99,6 +114,10 @@ The application is deployed as a static site on **DigitalOcean App Platform**, w
 | Type | Static Site |
 | Build Command | `npm run build` |
 | Output Directory | `build` |
+| Environment Variable | `REACT_APP_LLM_PROXY_URL` (App-Level) |
+| Environment Variable | `NODE_AUTH_TOKEN` (App-Level, for GitHub Package Registry) |
+
+**Note:** The DigitalOcean App Platform build environment needs `NODE_AUTH_TOKEN` set so `npm install` can fetch `@jrmst102/*` packages from the GitHub Package Registry. The `.npmrc` file in the repo configures the registry scope.
 
 ## Technology Stack
 
@@ -106,7 +125,9 @@ The application is deployed as a static site on **DigitalOcean App Platform**, w
 |-------|-----------|
 | Framework | React 19 (functional components, hooks) |
 | Charting | Recharts 3 |
-| Styling | Inline styles with design tokens |
+| UI Components | `@jrmst102/ui-kit` (GitHub Package Registry) |
+| Design Tokens | `@jrmst102/shared-config` (GitHub Package Registry) |
+| Styling | Inline styles with shared design tokens |
 | Fonts | DM Sans, DM Mono (Google Fonts CDN) |
 | LLM Integration | Anthropic API (Claude Sonnet 4) via serverless proxy |
 | Hosting | DigitalOcean App Platform |
@@ -133,6 +154,7 @@ api/
 ├── project.yml             # DigitalOcean Functions config
 └── packages/llm/feedback/
     └── index.js             # Anthropic API proxy function
+.npmrc                       # GitHub Package Registry scope config
 ```
 
 ## License
