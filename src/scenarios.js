@@ -23,8 +23,8 @@ const scenarios = [
     initialInventory: 200,
     elasticity: 1.4,
     timeLimit: 30,
-    optimalRevenue: 4200,
-    demandBase: 12,
+    optimalRevenue: 18000,
+    demandBase: 4,
     unit: 'units',
     competitorPrices: [
       75, 74, 73, 72, 71, 69, 68, 67, 66, 65,
@@ -57,7 +57,7 @@ const scenarios = [
     initialInventory: 90,
     elasticity: 1.1,
     timeLimit: 30,
-    optimalRevenue: 9500,
+    optimalRevenue: 38000,
     demandBase: 6,
     unit: 'seats',
     competitorPrices: [
@@ -91,7 +91,7 @@ const scenarios = [
     initialInventory: 60,
     elasticity: 0.9,
     timeLimit: 30,
-    optimalRevenue: 8500,
+    optimalRevenue: 28000,
     demandBase: 5,
     unit: 'rooms',
     competitorPrices: [
@@ -125,8 +125,8 @@ const scenarios = [
     initialInventory: 500,
     elasticity: 1.6,
     timeLimit: 30,
-    optimalRevenue: 28000,
-    demandBase: 25,
+    optimalRevenue: 57000,
+    demandBase: 8,
     unit: 'tickets',
     competitorPrices: [
       110, 106, 101, 97, 92, 88, 84, 79, 75, 70,
