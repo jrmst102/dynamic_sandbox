@@ -110,8 +110,7 @@ export default function Results({ scenario, totalRevenue, tickHistory, onRetry, 
   }, [requestFeedback]);
 
   return (
-    <div className="min-h-screen" style={{ background: colors.background, fontFamily: "'DM Sans', sans-serif", position: 'relative' }}>
-      <img src={process.env.PUBLIC_URL + '/nyu-logo.svg'} alt="NYU" style={{ position: 'absolute', top: 16, left: 16, height: 40 }} />
+    <div className="min-h-screen" style={{ background: colors.background, fontFamily: "'DM Sans', sans-serif" }}>
       <div className="max-w-lg mx-auto text-center" style={{ padding: '60px 20px' }}>
         {/* Grade Badge */}
         <div

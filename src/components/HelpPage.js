@@ -90,7 +90,7 @@ export default function HelpPage({ onBack }) {
         </p>
         <ol style={{ paddingLeft: 20, lineHeight: 1.8, color: colors.text }}>
           <li><strong>E-Commerce</strong> — Learn the basics: how price changes affect demand and revenue in a high-elasticity market.</li>
-          <li><strong>Ride-Share</strong> — Practice surge pricing with moderate elasticity and limited supply.</li>
+          <li><strong>Airline Seats</strong> — Price a regional flight as departure approaches with moderate elasticity and limited seats.</li>
           <li><strong>Hotel</strong> — Manage inelastic demand where pricing too low means leaving money on the table.</li>
           <li><strong>Event Tickets</strong> — Handle high volume, high elasticity, and the pressure of a large inventory.</li>
         </ol>
@@ -114,8 +114,7 @@ export default function HelpPage({ onBack }) {
 // Shared content page wrapper
 export function ContentPage({ title, onBack, children }) {
   return (
-    <div className="min-h-screen" style={{ background: colors.background, fontFamily: "'DM Sans', sans-serif", position: 'relative' }}>
-      <img src={process.env.PUBLIC_URL + '/nyu-logo.svg'} alt="NYU" style={{ position: 'absolute', top: 16, left: 16, height: 40 }} />
+    <div className="min-h-screen" style={{ background: colors.background, fontFamily: "'DM Sans', sans-serif" }}>
       <div className="max-w-3xl mx-auto px-5 py-10">
         {/* Back navigation */}
         <Button variant="ghost" size="sm" onClick={onBack} className="mb-6 !text-sm" aria-label="Back to level select">

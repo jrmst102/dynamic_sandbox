@@ -12,17 +12,10 @@ export default function LevelSelect({ scores, onSelectLevel, onNavigate }) {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: colors.background, fontFamily: "'DM Sans', sans-serif", position: 'relative' }}>
-      <img src={process.env.PUBLIC_URL + '/nyu-logo.svg'} alt="NYU" style={{ position: 'absolute', top: 16, left: 16, height: 40 }} />
+    <div className="min-h-screen" style={{ background: colors.background, fontFamily: "'DM Sans', sans-serif" }}>
       <div className="max-w-3xl mx-auto px-5 py-10">
         {/* Header */}
         <div className="text-center mb-8">
-          <img
-            src={process.env.PUBLIC_URL + '/dynamic-pricing-sandbox-logo.svg'}
-            alt="Dynamic Pricing Sandbox"
-            style={{ height: 90, marginBottom: 6 }}
-            className="inline-block"
-          />
           <p className="text-sm mt-0" style={{ color: colors.textSecondary }}>
             Master the art of dynamic pricing across four industry scenarios
           </p>

@@ -26,8 +26,7 @@ export default function ScenarioBriefing({ scenario, onStart, onBack }) {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: colors.background, fontFamily: "'DM Sans', sans-serif", position: 'relative' }}>
-      <img src={process.env.PUBLIC_URL + '/nyu-logo.svg'} alt="NYU" style={{ position: 'absolute', top: 16, left: 16, height: 40 }} />
+    <div className="min-h-screen" style={{ background: colors.background, fontFamily: "'DM Sans', sans-serif" }}>
       <div className="max-w-3xl mx-auto px-5 pt-6 pb-12">
         {/* Back button */}
         <Button variant="ghost" size="sm" onClick={onBack} className="mb-4 !text-sm" aria-label="Back to level select">
