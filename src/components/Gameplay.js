@@ -325,6 +325,40 @@ export default function Gameplay({ scenario, tickMode, onFinish, onBack }) {
           </div>
         </div>
 
+        {/* Price Position Indicator with competitor badge */}
+        <div style={{ ...cardStyle, padding: 12, marginBottom: 12 }}>
+          <div style={{ fontSize: 10, fontWeight: 600, color: colors.textSecondary, marginBottom: 6 }}>Price Position</div>
+          <div style={{ position: 'relative', height: 36, background: '#f1f5f9', borderRadius: 8, overflow: 'visible' }}>
+            <PriceMarker value={scenario.minPrice} min={scenario.minPrice} max={scenario.maxPrice} label={`$${scenario.minPrice}`} />
+            <PriceMarker value={scenario.basePrice} min={scenario.minPrice} max={scenario.maxPrice} label={`$${scenario.basePrice}`} isBase />
+            <PriceMarker value={scenario.maxPrice} min={scenario.minPrice} max={scenario.maxPrice} label={`$${scenario.maxPrice}`} />
+            {/* Competitor badge */}
+            <div style={{
+              position: 'absolute',
+              left: `${((compPrice - scenario.minPrice) / (scenario.maxPrice - scenario.minPrice)) * 100}%`,
+              top: '50%', transform: 'translate(-50%, -50%)',
+              background: '#94a3b8', color: '#fff', padding: '2px 7px', borderRadius: 10,
+              fontSize: 10, fontWeight: 600, fontFamily: "'DM Mono', monospace", whiteSpace: 'nowrap', zIndex: 1,
+            }}>
+              ${compPrice}
+            </div>
+            {/* User effective price badge */}
+            <div style={{
+              position: 'absolute',
+              left: `${((effectivePrice - scenario.minPrice) / (scenario.maxPrice - scenario.minPrice)) * 100}%`,
+              top: '50%', transform: 'translate(-50%, -50%)',
+              background: colors.primary, color: '#fff', padding: '2px 8px', borderRadius: 10,
+              fontSize: 10, fontWeight: 700, fontFamily: "'DM Mono', monospace", whiteSpace: 'nowrap', zIndex: 2,
+            }}>
+              ${effectivePrice.toFixed(0)}
+            </div>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 14, marginTop: 20, fontSize: 10, color: colors.textSecondary }}>
+            <span><span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: colors.primary, marginRight: 4, verticalAlign: 'middle' }} />You</span>
+            <span><span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#94a3b8', marginRight: 4, verticalAlign: 'middle' }} />Competitor</span>
+          </div>
+        </div>
+
         {/* Promotional Controls Panel */}
         <div style={{ ...cardStyle, padding: 14, marginBottom: 12 }}>
           {/* Discounts */}
@@ -545,40 +579,6 @@ export default function Gameplay({ scenario, tickMode, onFinish, onBack }) {
             </div>
             <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 12, fontWeight: 600, color: sentimentColor, minWidth: 36, textAlign: 'right' }}>
               {Math.round(sentiment)}%
-            </div>
-          </div>
-
-          {/* Price Position Indicator with competitor badge */}
-          <div style={{ ...cardStyle, padding: 12 }}>
-            <div style={{ fontSize: 10, fontWeight: 600, color: colors.textSecondary, marginBottom: 6 }}>Price Position</div>
-            <div style={{ position: 'relative', height: 36, background: '#f1f5f9', borderRadius: 8, overflow: 'visible' }}>
-              <PriceMarker value={scenario.minPrice} min={scenario.minPrice} max={scenario.maxPrice} label={`$${scenario.minPrice}`} />
-              <PriceMarker value={scenario.basePrice} min={scenario.minPrice} max={scenario.maxPrice} label={`$${scenario.basePrice}`} isBase />
-              <PriceMarker value={scenario.maxPrice} min={scenario.minPrice} max={scenario.maxPrice} label={`$${scenario.maxPrice}`} />
-              {/* Competitor badge */}
-              <div style={{
-                position: 'absolute',
-                left: `${((compPrice - scenario.minPrice) / (scenario.maxPrice - scenario.minPrice)) * 100}%`,
-                top: '50%', transform: 'translate(-50%, -50%)',
-                background: '#94a3b8', color: '#fff', padding: '2px 7px', borderRadius: 10,
-                fontSize: 10, fontWeight: 600, fontFamily: "'DM Mono', monospace", whiteSpace: 'nowrap', zIndex: 1,
-              }}>
-                ${compPrice}
-              </div>
-              {/* User effective price badge */}
-              <div style={{
-                position: 'absolute',
-                left: `${((effectivePrice - scenario.minPrice) / (scenario.maxPrice - scenario.minPrice)) * 100}%`,
-                top: '50%', transform: 'translate(-50%, -50%)',
-                background: colors.primary, color: '#fff', padding: '2px 8px', borderRadius: 10,
-                fontSize: 10, fontWeight: 700, fontFamily: "'DM Mono', monospace", whiteSpace: 'nowrap', zIndex: 2,
-              }}>
-                ${effectivePrice.toFixed(0)}
-              </div>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'center', gap: 14, marginTop: 20, fontSize: 10, color: colors.textSecondary }}>
-              <span><span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: colors.primary, marginRight: 4, verticalAlign: 'middle' }} />You</span>
-              <span><span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#94a3b8', marginRight: 4, verticalAlign: 'middle' }} />Competitor</span>
             </div>
           </div>
 

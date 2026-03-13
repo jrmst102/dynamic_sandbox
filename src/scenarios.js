@@ -91,7 +91,7 @@ const scenarios = [
     initialInventory: 60,
     elasticity: 0.9,
     timeLimit: 30,
-    optimalRevenue: 28000,
+    optimalRevenue: 25000,
     demandBase: 5,
     unit: 'rooms',
     competitorPrices: [
