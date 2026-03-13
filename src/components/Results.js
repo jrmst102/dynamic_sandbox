@@ -202,7 +202,7 @@ export default function Results({ scenario, totalRevenue, tickHistory, onRetry, 
         )}
 
         <div className="text-center mt-6 text-xs" style={{ color: colors.textSecondary }}>
-          v1.1.1 — © 2026 by Dr. Jose Mendoza
+          v1.1.2 — © 2026 by Dr. Jose Mendoza
         </div>
       </div>
     </div>
