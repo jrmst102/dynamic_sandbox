@@ -49,6 +49,10 @@ export default function HomePage() {
             </div>
           </div>
         </Card>
+
+        <div style={{ textAlign: 'center', marginTop: 20, fontSize: 11, color: colors.textSecondary }}>
+          © 2026 by Dr. Jose Mendoza
+        </div>
       </div>
     </div>
   );

@@ -83,6 +83,9 @@ export default function LoginPage() {
             </Button>
           </form>
         </div>
+        <div style={{ textAlign: 'center', marginTop: 16, fontSize: 11, color: colors.textSecondary }}>
+          © 2026 by Dr. Jose Mendoza
+        </div>
       </div>
     </div>
   );
