@@ -48,10 +48,36 @@ async function fetchLLMFeedback(scenario, tickHistory) {
     }),
   });
 
-  if (!res.ok) throw new Error(`LLM proxy returned ${res.status}`);
-  const data = await res.json();
+  let data;
+  try {
+    data = await res.json();
+  } catch {
+    data = {};
+  }
+
+  if (!res.ok) {
+    const errorMessage = data?.error || data?.message || `LLM proxy returned ${res.status}`;
+    throw new Error(errorMessage);
+  }
+
+  const parsedBody = typeof data.body === 'string'
+    ? (() => {
+      try {
+        return JSON.parse(data.body);
+      } catch {
+        return {};
+      }
+    })()
+    : null;
+
+  const source = parsedBody || data;
   // Support both direct Anthropic response format and proxy wrapper
-  const text = data.content?.[0]?.text || data.text || data.feedback || '';
+  const text = source.content?.[0]?.text || source.text || source.feedback || '';
+
+  if (!text || !text.trim()) {
+    throw new Error('The feedback service returned an empty response.');
+  }
+
   return text;
 }
 
@@ -62,17 +88,18 @@ export default function Results({ scenario, totalRevenue, tickHistory, onRetry, 
 
   const [llmFeedback, setLlmFeedback] = useState(null);
   const [llmLoading, setLlmLoading] = useState(false);
-  const [llmError, setLlmError] = useState(false);
+  const [llmError, setLlmError] = useState('');
 
   const requestFeedback = useCallback(async () => {
     if (!LLM_PROXY_URL || !tickHistory || tickHistory.length === 0) return;
     setLlmLoading(true);
-    setLlmError(false);
+    setLlmError('');
     try {
       const feedback = await fetchLLMFeedback(scenario, tickHistory);
       setLlmFeedback(feedback);
-    } catch {
-      setLlmError(true);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Unable to generate feedback at this time.';
+      setLlmError(message);
     } finally {
       setLlmLoading(false);
     }
@@ -134,6 +161,9 @@ export default function Results({ scenario, totalRevenue, tickHistory, onRetry, 
               <div className="text-center py-4">
                 <p className="text-sm mb-2.5" style={{ color: colors.textSecondary }}>
                   Unable to generate feedback at this time.
+                </p>
+                <p className="text-xs mb-2.5" style={{ color: colors.textSecondary }}>
+                  {llmError}
                 </p>
                 <Button variant="secondary" size="sm" onClick={requestFeedback}>
                   Retry Analysis
