@@ -1,17 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '@jrmst102/auth-client';
 import { useNavigate } from 'react-router-dom';
 import { colors } from '../styles';
 import { Card, Button } from '@jrmst102/ui-kit';
+import QuickStartPage from './QuickStartPage';
+import HelpPage from './HelpPage';
+import TermsPage from './TermsPage';
+import PrivacyPage from './PrivacyPage';
 
 export default function HomePage() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const [subPage, setSubPage] = useState(null);
 
   const handleLogout = async () => {
     await logout();
     navigate('/login');
   };
+
+  const handleBack = () => setSubPage(null);
+
+  if (subPage === 'quickstart') return <QuickStartPage onBack={handleBack} />;
+  if (subPage === 'help') return <HelpPage onBack={handleBack} />;
+  if (subPage === 'terms') return <TermsPage onBack={handleBack} />;
+  if (subPage === 'privacy') return <PrivacyPage onBack={handleBack} />;
 
   return (
     <div className="min-h-screen" style={{ background: colors.background, fontFamily: "'DM Sans', sans-serif" }}>
@@ -50,8 +62,24 @@ export default function HomePage() {
           </div>
         </Card>
 
+        {/* Footer links */}
+        <div className="flex justify-center gap-5 mt-10 pt-5" style={{ borderTop: `1px solid ${colors.border}` }}>
+          <Button variant="ghost" size="sm" onClick={() => setSubPage('quickstart')} className="!text-xs underline">
+            Quick Start
+          </Button>
+          <Button variant="ghost" size="sm" onClick={() => setSubPage('help')} className="!text-xs underline">
+            What is Dynamic Pricing?
+          </Button>
+          <Button variant="ghost" size="sm" onClick={() => setSubPage('terms')} className="!text-xs underline">
+            Terms and Conditions
+          </Button>
+          <Button variant="ghost" size="sm" onClick={() => setSubPage('privacy')} className="!text-xs underline">
+            Privacy Policy
+          </Button>
+        </div>
+
         <div style={{ textAlign: 'center', marginTop: 20, fontSize: 11, color: colors.textSecondary }}>
-          © 2026 by Dr. Jose Mendoza
+          v1.1.1 — © 2026 by Dr. Jose Mendoza
         </div>
       </div>
     </div>
