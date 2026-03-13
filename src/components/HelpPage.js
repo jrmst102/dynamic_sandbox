@@ -61,22 +61,18 @@ export default function HelpPage({ onBack }) {
       <Section title="Real-World Examples">
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           <Example
-            icon="🚗"
-            title="Ride-Sharing (Uber, Lyft)"
-            text="Surge pricing during peak hours — prices rise when more riders are requesting than drivers are available."
-          />
-          <Example
-            icon="🛒"
             title="E-Commerce (Amazon, Walmart)"
             text="Online retailers change prices thousands of times per day based on demand, competitor prices, and inventory levels."
           />
           <Example
-            icon="🏨"
+            title="Airlines (Delta, United)"
+            text="Ticket prices shift based on seat availability, booking window, and route demand — a textbook case of yield management."
+          />
+          <Example
             title="Hotels (Marriott, Hilton)"
             text="Room rates fluctuate based on occupancy, local events, day of week, and booking lead time."
           />
           <Example
-            icon="🎵"
             title="Event Tickets (Ticketmaster, StubHub)"
             text="Ticket prices adjust based on artist popularity, seat location, and how quickly tickets are selling."
           />
@@ -159,7 +155,7 @@ function Section({ title, children }) {
 function Example({ icon, title, text }) {
   return (
     <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start', padding: '10px 14px', background: '#f8fafc', borderRadius: 10 }}>
-      <span style={{ fontSize: 24 }}>{icon}</span>
+      {icon && <span style={{ fontSize: 24 }}>{icon}</span>}
       <div>
         <div style={{ fontWeight: 600, fontSize: 14, color: colors.text }}>{title}</div>
         <div style={{ fontSize: 13, color: colors.textSecondary, marginTop: 2 }}>{text}</div>

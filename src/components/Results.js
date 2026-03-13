@@ -177,7 +177,7 @@ export default function Results({ scenario, totalRevenue, tickHistory, onRetry, 
             )}
             {llmFeedback && !llmLoading && (
               <div className="text-xs mt-3 pt-2 text-right" style={{ color: colors.textSecondary, borderTop: `1px solid ${colors.primaryLight}` }}>
-                Powered by Claude Sonnet 4 (Anthropic)
+                Note: This Strategy Feedback is AI-generated
               </div>
             )}
           </Card>
