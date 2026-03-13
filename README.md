@@ -13,7 +13,7 @@ An educational browser-based simulation for learning dynamic pricing strategy. A
 
 Scenarios unlock sequentially — score 60% pricing efficiency or higher to advance. Optimal revenue benchmarks are calibrated via dynamic programming so that passive play (no price changes) earns a failing grade, while active dynamic pricing with slider alone achieves B+/A.
 
-## Features (v0.1.4)
+## Features (v1.0.0)
 
 - **Scenario Briefing Screens** — Context, objectives, competitor intel, and strategic hints before each challenge
 - **Configurable Tick Pacing** — Deliberate (5 min/tick), Standard (60s), or Fast (1.2s) modes
