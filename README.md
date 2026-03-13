@@ -8,7 +8,7 @@ An educational browser-based simulation for learning dynamic pricing strategy. A
 |---|----------|---------|------------|-------------|-----------|-----------------|
 | 1 | **E-Commerce** 🛒 | Holiday flash sale on wireless headphones | 1.4 (High) | 4 | 200 units | $18,000 |
 | 2 | **Airline Seats** ✈️ | Pricing a regional flight as departure approaches | 1.1 (Medium) | 6 | 90 seats | $38,000 |
-| 3 | **Hotel** 🏨 | Convention weekend room rate management | 0.9 (Low) | 5 | 60 rooms | $28,000 |
+| 3 | **Hotel** 🏨 | Convention weekend room rate management | 0.9 (Low) | 5 | 60 rooms | $25,000 |
 | 4 | **Event Tickets** 🎵 | Summer music festival ticket sales | 1.6 (Very High) | 8 | 500 tickets | $57,000 |
 
 Scenarios unlock sequentially — score 60% pricing efficiency or higher to advance. Optimal revenue benchmarks are calibrated via dynamic programming so that passive play (no price changes) earns a failing grade, while active dynamic pricing with slider alone achieves B+/A.
