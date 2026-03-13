@@ -247,7 +247,8 @@ export default function Gameplay({ scenario, tickMode, onFinish, onBack }) {
   const countdownProgress = tickInterval > 0 ? ((tickInterval - countdown) / tickInterval) * 100 : 0;
 
   return (
-    <div style={{ minHeight: '100vh', background: colors.background, fontFamily: "'DM Sans', sans-serif" }}>
+    <div style={{ minHeight: '100vh', background: colors.background, fontFamily: "'DM Sans', sans-serif", position: 'relative' }}>
+      <img src={process.env.PUBLIC_URL + '/nyu-logo.svg'} alt="NYU" style={{ position: 'absolute', top: 16, left: 16, height: 40 }} />
       <div style={{ maxWidth: 800, margin: '0 auto', padding: '16px 16px 32px' }}>
         {/* Header bar */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
@@ -594,6 +595,10 @@ export default function Gameplay({ scenario, tickMode, onFinish, onBack }) {
               {inventory}/{scenario.initialInventory} {scenario.unit}
             </div>
           </div>
+        </div>
+
+        <div style={{ textAlign: 'center', marginTop: 20, fontSize: 11, color: colors.textSecondary }}>
+          © 2026 by Dr. Jose Mendoza
         </div>
       </div>
     </div>

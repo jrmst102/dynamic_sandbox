@@ -114,7 +114,8 @@ export default function HelpPage({ onBack }) {
 // Shared content page wrapper
 export function ContentPage({ title, onBack, children }) {
   return (
-    <div className="min-h-screen" style={{ background: colors.background, fontFamily: "'DM Sans', sans-serif" }}>
+    <div className="min-h-screen" style={{ background: colors.background, fontFamily: "'DM Sans', sans-serif", position: 'relative' }}>
+      <img src={process.env.PUBLIC_URL + '/nyu-logo.svg'} alt="NYU" style={{ position: 'absolute', top: 16, left: 16, height: 40 }} />
       <div className="max-w-3xl mx-auto px-5 py-10">
         {/* Back navigation */}
         <Button variant="ghost" size="sm" onClick={onBack} className="mb-6 !text-sm" aria-label="Back to level select">
@@ -134,6 +135,10 @@ export function ContentPage({ title, onBack, children }) {
           </div>
           {children}
         </Card>
+
+        <div className="text-center mt-6 text-xs" style={{ color: colors.textSecondary }}>
+          © 2026 by Dr. Jose Mendoza
+        </div>
       </div>
     </div>
   );

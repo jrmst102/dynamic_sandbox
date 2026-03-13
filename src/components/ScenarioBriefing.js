@@ -26,7 +26,8 @@ export default function ScenarioBriefing({ scenario, onStart, onBack }) {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: colors.background, fontFamily: "'DM Sans', sans-serif" }}>
+    <div className="min-h-screen" style={{ background: colors.background, fontFamily: "'DM Sans', sans-serif", position: 'relative' }}>
+      <img src={process.env.PUBLIC_URL + '/nyu-logo.svg'} alt="NYU" style={{ position: 'absolute', top: 16, left: 16, height: 40 }} />
       <div className="max-w-3xl mx-auto px-5 pt-6 pb-12">
         {/* Back button */}
         <Button variant="ghost" size="sm" onClick={onBack} className="mb-4 !text-sm" aria-label="Back to level select">
@@ -130,6 +131,10 @@ export default function ScenarioBriefing({ scenario, onStart, onBack }) {
         <Button variant="primary" size="lg" onClick={handleStart} className="w-full !text-base">
           Begin Challenge
         </Button>
+
+        <div className="text-center mt-6 text-xs" style={{ color: colors.textSecondary }}>
+          © 2026 by Dr. Jose Mendoza
+        </div>
       </div>
     </div>
   );

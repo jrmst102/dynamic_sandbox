@@ -12,7 +12,8 @@ export default function LevelSelect({ scores, onSelectLevel, onNavigate }) {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: colors.background, fontFamily: "'DM Sans', sans-serif" }}>
+    <div className="min-h-screen" style={{ background: colors.background, fontFamily: "'DM Sans', sans-serif", position: 'relative' }}>
+      <img src={process.env.PUBLIC_URL + '/nyu-logo.svg'} alt="NYU" style={{ position: 'absolute', top: 16, left: 16, height: 40 }} />
       <div className="max-w-3xl mx-auto px-5 py-10">
         {/* Header */}
         <div className="text-center mb-8">
@@ -116,7 +117,7 @@ export default function LevelSelect({ scores, onSelectLevel, onNavigate }) {
         </div>
 
         <div className="text-center mt-4 text-xs" style={{ color: colors.textSecondary }}>
-          © 2026 Dr. Jose Mendoza. All rights reserved.
+          © 2026 by Dr. Jose Mendoza
         </div>
       </div>
     </div>

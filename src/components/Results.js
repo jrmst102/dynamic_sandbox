@@ -110,7 +110,8 @@ export default function Results({ scenario, totalRevenue, tickHistory, onRetry, 
   }, [requestFeedback]);
 
   return (
-    <div className="min-h-screen" style={{ background: colors.background, fontFamily: "'DM Sans', sans-serif" }}>
+    <div className="min-h-screen" style={{ background: colors.background, fontFamily: "'DM Sans', sans-serif", position: 'relative' }}>
+      <img src={process.env.PUBLIC_URL + '/nyu-logo.svg'} alt="NYU" style={{ position: 'absolute', top: 16, left: 16, height: 40 }} />
       <div className="max-w-lg mx-auto text-center" style={{ padding: '60px 20px' }}>
         {/* Grade Badge */}
         <div
@@ -175,6 +176,11 @@ export default function Results({ scenario, totalRevenue, tickHistory, onRetry, 
                 {llmFeedback}
               </div>
             )}
+            {llmFeedback && !llmLoading && (
+              <div className="text-xs mt-3 pt-2 text-right" style={{ color: colors.textSecondary, borderTop: `1px solid ${colors.primaryLight}` }}>
+                Powered by Claude Sonnet 4 (Anthropic)
+              </div>
+            )}
           </Card>
         )}
 
@@ -195,6 +201,10 @@ export default function Results({ scenario, totalRevenue, tickHistory, onRetry, 
             Score 60% or higher to unlock the next scenario.
           </p>
         )}
+
+        <div className="text-center mt-6 text-xs" style={{ color: colors.textSecondary }}>
+          © 2026 by Dr. Jose Mendoza
+        </div>
       </div>
     </div>
   );
