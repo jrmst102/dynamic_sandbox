@@ -13,8 +13,11 @@ An educational browser-based simulation for learning dynamic pricing strategy. A
 
 Scenarios unlock sequentially — score 60% pricing efficiency or higher to advance. Optimal revenue benchmarks are calibrated via dynamic programming so that passive play (no price changes) earns a failing grade, while active dynamic pricing with slider alone achieves B+/A.
 
-## Features (v1.0.0)
+## Features (v1.1)
 
+- **User Authentication** — Login/logout via `@jrmst102/auth-client` with JWT-based sessions and silent token refresh
+- **Home Page** — Authenticated landing page with app launcher
+- **Protected Routes** — All sandbox routes require authentication; unauthenticated users are redirected to login
 - **Scenario Briefing Screens** — Context, objectives, competitor intel, and strategic hints before each challenge
 - **Configurable Tick Pacing** — Deliberate (5 min/tick), Standard (60s), or Fast (1.2s) modes
 - **Competitor Price Display** — Scripted competitor pricing shown each tick on the price position indicator and revenue chart
@@ -55,10 +58,12 @@ npm start        # serves the build/ directory on port 8080
 | Package | Source | Purpose |
 |---------|--------|---------|
 | `@jrmst102/ui-kit` | GitHub Package Registry | Shared UI components |
-| `@jrmst102/shared-config` | GitHub Package Registry | Design tokens (colors, shadows, radii) |
-| `tailwindcss` | npm | Utility-first CSS framework (required by ui-kit) |
+| `@jrmst102/shared-config` | GitHub Package Registry | Design tokens and app constants |
+| `@jrmst102/auth-client` | GitHub Package Registry | Authentication provider, hooks, and protected routes |
 | `react`, `react-dom` | npm | UI framework |
+| `react-router-dom` | npm | Client-side routing |
 | `recharts` | npm | Charting library |
+| `tailwindcss` | npm | Utility-first CSS framework (required by ui-kit) |
 | `serve` | npm | Static file server (production) |
 
 ## LLM Feedback Setup
