@@ -1,122 +1,19 @@
-import React, { useState, useCallback } from 'react';
-import scenarios from './scenarios';
-import { calculateGrade } from './engine';
-import LevelSelect from './components/LevelSelect';
-import ScenarioBriefing from './components/ScenarioBriefing';
-import Gameplay from './components/Gameplay';
-import Results from './components/Results';
-import HelpPage from './components/HelpPage';
-import TermsPage from './components/TermsPage';
-import PrivacyPage from './components/PrivacyPage';
-import QuickStartPage from './components/QuickStartPage';
+import React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { ProtectedRoute } from '@jrmst102/auth-client';
+import LoginPage from './components/LoginPage';
+import HomePage from './components/HomePage';
+import Sandbox from './components/Sandbox';
 
 export default function App() {
-  const [screen, setScreen] = useState('menu');
-  const [currentLevel, setCurrentLevel] = useState(0);
-  const [scores, setScores] = useState({});
-  const [gameKey, setGameKey] = useState(0);
-  const [finalRevenue, setFinalRevenue] = useState(0);
-  const [tickMode, setTickMode] = useState(null);
-  const [tickHistory, setTickHistory] = useState([]);
-
-  const handleSelectLevel = useCallback((index) => {
-    setCurrentLevel(index);
-    setScreen('briefing');
-  }, []);
-
-  const handleStartFromBriefing = useCallback((mode) => {
-    setTickMode(mode);
-    setGameKey((k) => k + 1);
-    setScreen('playing');
-  }, []);
-
-  const handleFinish = useCallback((revenue, history) => {
-    setFinalRevenue(revenue);
-    setTickHistory(history || []);
-    const scenario = scenarios[currentLevel];
-    const { efficiency } = calculateGrade(revenue, scenario.optimalRevenue);
-
-    setScores((prev) => {
-      const prevScore = prev[currentLevel];
-      if (prevScore === undefined || efficiency > prevScore) {
-        return { ...prev, [currentLevel]: efficiency };
-      }
-      return prev;
-    });
-
-    setScreen('results');
-  }, [currentLevel]);
-
-  const handleRetry = useCallback(() => {
-    setScreen('briefing');
-  }, []);
-
-  const handleNext = useCallback(() => {
-    if (currentLevel < scenarios.length - 1) {
-      setCurrentLevel((l) => l + 1);
-      setScreen('briefing');
-    } else {
-      setScreen('menu');
-    }
-  }, [currentLevel]);
-
-  const handleBack = useCallback(() => {
-    setScreen('menu');
-  }, []);
-
-  const handleNavigate = useCallback((page) => {
-    setScreen(page);
-  }, []);
-
-  const scenario = scenarios[currentLevel];
-
-  switch (screen) {
-    case 'menu':
-      return (
-        <LevelSelect
-          scores={scores}
-          onSelectLevel={handleSelectLevel}
-          onNavigate={handleNavigate}
-        />
-      );
-    case 'briefing':
-      return (
-        <ScenarioBriefing
-          scenario={scenario}
-          onStart={handleStartFromBriefing}
-          onBack={handleBack}
-        />
-      );
-    case 'help':
-      return <HelpPage onBack={handleBack} />;
-    case 'quickstart':
-      return <QuickStartPage onBack={handleBack} />;
-    case 'terms':
-      return <TermsPage onBack={handleBack} />;
-    case 'privacy':
-      return <PrivacyPage onBack={handleBack} />;
-    case 'playing':
-      return (
-        <Gameplay
-          key={gameKey}
-          scenario={scenario}
-          tickMode={tickMode}
-          onFinish={handleFinish}
-          onBack={handleBack}
-        />
-      );
-    case 'results':
-      return (
-        <Results
-          scenario={scenario}
-          totalRevenue={finalRevenue}
-          tickHistory={tickHistory}
-          onRetry={handleRetry}
-          onNext={handleNext}
-          canAdvance={currentLevel < scenarios.length - 1}
-        />
-      );
-    default:
-      return null;
-  }
+  return (
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route element={<ProtectedRoute />}>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/pricing" element={<Sandbox />} />
+      </Route>
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  );
 }
