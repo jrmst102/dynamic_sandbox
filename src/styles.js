@@ -5,11 +5,16 @@
 
 import { colors as tokenColors, shadows, radii } from '@jrmst102/shared-config';
 
+const NYU_VIOLET = '#57068c';
+const NYU_VIOLET_DARK = '#3f0468';
+const NYU_VIOLET_LIGHT = '#d8c6e7';
+const NYU_VIOLET_BG = '#f4eff9';
+
 export const colors = {
-  primary: tokenColors.primary[500],
-  primaryDark: tokenColors.primary[600],
-  primaryLight: tokenColors.primary[100],
-  primaryBg: tokenColors.primary[50],
+  primary: NYU_VIOLET,
+  primaryDark: NYU_VIOLET_DARK,
+  primaryLight: NYU_VIOLET_LIGHT,
+  primaryBg: NYU_VIOLET_BG,
   background: tokenColors.neutral[50],
   card: '#ffffff',
   text: tokenColors.neutral[900],

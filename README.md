@@ -75,7 +75,12 @@ doctl auth init
 doctl serverless install
 doctl serverless connect
 
-# Deploy the proxy (set your Anthropic API key in api/.env)
+# Create the runtime env file for Functions (gitignored)
+cat > api/.env <<'EOF'
+ANTHROPIC_API_KEY=sk-ant-api03-your-key-here
+EOF
+
+# Deploy the proxy
 doctl serverless deploy api
 
 # Get the function URL
@@ -83,16 +88,18 @@ doctl serverless functions get llm/feedback --url
 ```
 
 The proxy function lives in `api/packages/llm/feedback/index.js`. It forwards requests to the Anthropic API with the key appended server-side.
+The Functions runtime variable is mapped in `api/project.yml`.
 
-### 2. Configure the environment variable
+### 2. Configure the frontend environment variable
 
-Create a `.env` file in the project root:
+For local development, create a `.env` file in the project root:
 
 ```
 REACT_APP_LLM_PROXY_URL=https://your-function-url-here
 ```
 
 For DigitalOcean App Platform: add `REACT_APP_LLM_PROXY_URL` as an App-Level Environment Variable in the app settings.
+This value is compiled into the React bundle at build time, so changing it requires a rebuild/redeploy of the app.
 
 ### 3. API key management
 
@@ -102,23 +109,49 @@ Store your Anthropic API key in `api/.env` (gitignored):
 ANTHROPIC_API_KEY=sk-ant-api03-your-key-here
 ```
 
+`ANTHROPIC_API_KEY` belongs to the DigitalOcean Functions runtime, not the React app. Adding it only to the root `.env` or App Platform app-level env vars will not make the proxy work.
+
 The key is never embedded in client-side code. No personally identifiable information is sent to the API — only scenario configuration and in-session gameplay data.
+
+If you rotate the Anthropic key, redeploy the function so the new runtime env is applied:
+
+```bash
+doctl serverless deploy api
+```
+
+### 4. Verify the proxy
+
+Use a minimal test request to confirm the function can reach Anthropic:
+
+```bash
+FUNCTION_URL="$(doctl serverless functions get llm/feedback --url)"
+
+curl -X POST "$FUNCTION_URL" \
+    -H 'Content-Type: application/json' \
+    -d '{"max_tokens":80,"messages":[{"role":"user","content":"Return exactly: ok"}]}'
+```
+
+Expected result: HTTP 200 with a response body containing `"text":"ok"`.
 
 ## Deployment
 
-The application is deployed as a static site on **DigitalOcean App Platform**, with auto-deploy on push to `main`.
+The application is deployed as a Node.js web service on **DigitalOcean App Platform**, with auto-deploy on push to `main`. The service builds the React app and serves the `build/` directory with `serve`.
 
 | Setting | Value |
 |---------|-------|
 | Source | GitHub — `jrmst102/dynamic_sandbox` |
 | Branch | `main` |
-| Type | Static Site |
+| Type | Web Service |
 | Build Command | `npm run build` |
-| Output Directory | `build` |
+| Run Command | `npm start` |
 | Environment Variable | `REACT_APP_LLM_PROXY_URL` (App-Level) |
 | Environment Variable | `NODE_AUTH_TOKEN` (App-Level, for GitHub Package Registry) |
 
-**Note:** The DigitalOcean App Platform build environment needs `NODE_AUTH_TOKEN` set so `npm install` can fetch `@jrmst102/*` packages from the GitHub Package Registry. The `.npmrc` file in the repo configures the registry scope.
+**Notes:**
+
+- The DigitalOcean App Platform build environment needs `NODE_AUTH_TOKEN` set so `npm install` can fetch `@jrmst102/*` packages from the GitHub Package Registry. The `.npmrc` file in the repo configures the registry scope.
+- `REACT_APP_LLM_PROXY_URL` must point to the deployed `llm/feedback` function URL.
+- `ANTHROPIC_API_KEY` is required by DigitalOcean Functions and should be managed in `api/.env` before running `doctl serverless deploy api`.
 
 ## Technology Stack
 

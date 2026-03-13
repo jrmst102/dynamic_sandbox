@@ -153,9 +153,9 @@ export function getGradeColor(grade) {
     case 'A':
       return '#34d399';
     case 'B+':
-      return '#3b82f6';
+      return '#57068c';
     case 'B':
-      return '#60a5fa';
+      return '#7d53a7';
     case 'C':
       return '#f59e0b';
     case 'D':

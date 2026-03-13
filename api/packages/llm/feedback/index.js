@@ -3,18 +3,11 @@
  * Forwards requests to the Anthropic API with the API key appended server-side.
  * No user data is stored or logged.
  */
-const CORS_HEADERS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type',
-};
-
 function jsonResponse(statusCode, payload) {
   return {
     statusCode,
     headers: {
       'Content-Type': 'application/json',
-      ...CORS_HEADERS,
     },
     body: JSON.stringify(payload),
   };
@@ -23,11 +16,11 @@ function jsonResponse(statusCode, payload) {
 async function main(args) {
   const method = (args.__ow_method || '').toLowerCase();
 
-  // Handle browser CORS preflight requests.
+  // Let the platform handle CORS headers for preflight and response delivery.
   if (method === 'options') {
     return {
       statusCode: 204,
-      headers: CORS_HEADERS,
+      headers: {},
       body: '',
     };
   }

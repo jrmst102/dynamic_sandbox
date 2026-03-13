@@ -8,6 +8,7 @@ import Results from './components/Results';
 import HelpPage from './components/HelpPage';
 import TermsPage from './components/TermsPage';
 import PrivacyPage from './components/PrivacyPage';
+import QuickStartPage from './components/QuickStartPage';
 
 export default function App() {
   const [screen, setScreen] = useState('menu');
@@ -88,6 +89,8 @@ export default function App() {
       );
     case 'help':
       return <HelpPage onBack={handleBack} />;
+    case 'quickstart':
+      return <QuickStartPage onBack={handleBack} />;
     case 'terms':
       return <TermsPage onBack={handleBack} />;
     case 'privacy':

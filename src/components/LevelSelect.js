@@ -25,6 +25,11 @@ export default function LevelSelect({ scores, onSelectLevel, onNavigate }) {
           <p className="text-sm mt-0" style={{ color: colors.textSecondary }}>
             Master the art of dynamic pricing across four industry scenarios
           </p>
+          <div className="mt-3">
+            <Button variant="primary" size="sm" onClick={() => onNavigate('quickstart')}>
+              Quick Start Guide
+            </Button>
+          </div>
         </div>
 
         {/* Scenario Cards */}
@@ -96,6 +101,9 @@ export default function LevelSelect({ scores, onSelectLevel, onNavigate }) {
 
         {/* Footer links */}
         <div className="flex justify-center gap-5 mt-10 pt-5" style={{ borderTop: `1px solid ${colors.border}` }}>
+          <Button variant="ghost" size="sm" onClick={() => onNavigate('quickstart')} className="!text-xs underline">
+            Quick Start
+          </Button>
           <Button variant="ghost" size="sm" onClick={() => onNavigate('help')} className="!text-xs underline">
             What is Dynamic Pricing?
           </Button>
