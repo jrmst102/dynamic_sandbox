@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAuth } from '@jrmst102/auth-client';
+import { useAuth } from '../auth';
 import { useNavigate } from 'react-router-dom';
 import { colors } from '../styles';
 import { Card, Button } from '@jrmst102/ui-kit';

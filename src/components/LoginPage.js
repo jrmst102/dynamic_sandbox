@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { useAuth } from '@jrmst102/auth-client';
+import { useAuth } from '../auth';
 import { useNavigate } from 'react-router-dom';
-import { colors } from '../styles';
-import { Button } from '@jrmst102/ui-kit';
+import { colors, primaryButton } from '../styles';
 
 export default function LoginPage() {
   const { login, error, isLoading } = useAuth();
@@ -72,15 +71,13 @@ export default function LoginPage() {
               </p>
             )}
 
-            <Button
-              variant="primary"
-              size="md"
+            <button
               type="submit"
               disabled={submitting}
-              style={{ width: '100%' }}
+              style={{ ...primaryButton, width: '100%', opacity: submitting ? 0.6 : 1 }}
             >
               {submitting ? 'Signing in…' : 'Sign In'}
-            </Button>
+            </button>
           </form>
         </div>
         <div style={{ textAlign: 'center', marginTop: 16, fontSize: 11, color: colors.textSecondary }}>

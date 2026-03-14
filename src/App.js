@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { ProtectedRoute } from '@jrmst102/auth-client';
+import { ProtectedRoute } from './auth';
 import LoginPage from './components/LoginPage';
 import HomePage from './components/HomePage';
 import Sandbox from './components/Sandbox';
