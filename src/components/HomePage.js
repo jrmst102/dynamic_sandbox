@@ -79,7 +79,7 @@ export default function HomePage() {
         </div>
 
         <div style={{ textAlign: 'center', marginTop: 20, fontSize: 11, color: colors.textSecondary }}>
-          v1.1.2 — © 2026 by Dr. Jose Mendoza
+          v1.2.0 — © 2026 by Dr. Jose Mendoza
         </div>
       </div>
     </div>
