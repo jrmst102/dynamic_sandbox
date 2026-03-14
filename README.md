@@ -15,11 +15,11 @@ Scenarios unlock sequentially — score 60% pricing efficiency or higher to adva
 
 ## Features (v1.2.0)
 
-- **User Authentication** — Login/logout via `@jrmst102/auth-client` with JWT-based sessions and silent token refresh
+- **User Authentication** — Login/logout with session-based auth; unauthenticated users are redirected to login
 - **Home Page** — Authenticated landing page with app launcher
-- **Protected Routes** — All sandbox routes require authentication; unauthenticated users are redirected to login
+- **Protected Routes** — All sandbox routes require authentication
 - **Scenario Briefing Screens** — Context, objectives, competitor intel, and strategic hints before each challenge
-- **Configurable Tick Pacing** — Deliberate (5 min/tick), Standard (60s), or Fast (1.2s) modes
+- **Configurable Tick Pacing** — Deliberate (5 min/tick, manual advance), Standard (1 min/tick), or Fast/Hard (2 sec/tick)
 - **Competitor Price Display** — Scripted competitor pricing shown each tick on the price position indicator and revenue chart
 - **Competitive Pressure** — Demand shifts based on your price relative to the competitor's
 - **Discounts** — Apply 5–25% price reductions to lower effective price
@@ -27,6 +27,8 @@ Scenarios unlock sequentially — score 60% pricing efficiency or higher to adva
 - **Bundles** — Scenario-specific product bundles that add a price premium and boost demand
 - **Decision-Support Panel** — Collapsible insights panel with elasticity indicator, revenue trend, price sensitivity, demand forecast, competitor delta, and inventory burn rate
 - **LLM-Powered Feedback** — AI-generated post-scenario strategy analysis via Anthropic Claude
+- **Print Report** — Save or print scenario results as PDF from the browser's print dialog
+- **Persistent Score Tracking** — Best score, number of attempts, and last attempt date per scenario (stored in localStorage, visible on /pricing)
 - **Challenge Retake** — Replay any unlocked scenario; highest score retained
 
 ## Getting Started

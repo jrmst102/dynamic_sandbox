@@ -4,6 +4,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 /* ── user store ─────────────────────────────────────────────── */
 const USERS = [
   { email: 'jose.mendoza@nyu.edu', password: 'Admin123!', name: 'Admin', role: 'admin' },
+  { email: 'demo@nyu.edu', password: 'demo1234', name: 'Demo User', role: 'user' },
   { email: 'hc2379@nyu.edu', password: 'Huisoo123', name: 'Hui Soo Chae', role: 'user' },
   { email: 'nsa258@nyu.edu', password: 'BlueCat258', name: 'Natasha Andaz', role: 'user' },
   { email: 'pb3263@nyu.edu', password: 'GreenFox3263', name: 'Patrick Brown Jr', role: 'user' },
