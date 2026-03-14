@@ -110,7 +110,7 @@ export default function Results({ scenario, totalRevenue, tickHistory, onRetry, 
   }, [requestFeedback]);
 
   return (
-    <div className="min-h-screen" style={{ background: colors.background, fontFamily: "'DM Sans', sans-serif" }}>
+    <div className="min-h-screen print-report" style={{ background: colors.background, fontFamily: "'DM Sans', sans-serif" }}>
       <div className="max-w-lg mx-auto text-center" style={{ padding: '60px 20px' }}>
         {/* Grade Badge */}
         <div
@@ -184,9 +184,12 @@ export default function Results({ scenario, totalRevenue, tickHistory, onRetry, 
         )}
 
         {/* Actions */}
-        <div className="flex gap-3 justify-center flex-wrap">
+        <div className="flex gap-3 justify-center flex-wrap no-print">
           <Button variant="secondary" onClick={onRetry}>
             🔄 Retry Challenge
+          </Button>
+          <Button variant="secondary" onClick={() => window.print()}>
+            🖨 Print Report
           </Button>
           {passed && canAdvance && (
             <Button variant="primary" onClick={onNext}>

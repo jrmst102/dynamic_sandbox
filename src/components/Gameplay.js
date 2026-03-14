@@ -13,8 +13,9 @@ import { promotions, discountLevels } from '../scenarios';
 import { Button, Select } from '@jrmst102/ui-kit';
 
 export default function Gameplay({ scenario, tickMode, onFinish, onBack }) {
-  const tickInterval = tickMode ? tickMode.interval : 1200;
+  const tickInterval = tickMode ? tickMode.interval : 2000;
   const isFastMode = tickMode && tickMode.id === 'fast';
+  const isDeliberateMode = tickMode && tickMode.id === 'deliberate';
 
   const [tick, setTick] = useState(0);
   const [price, setPrice] = useState(scenario.basePrice);
@@ -447,6 +448,11 @@ export default function Gameplay({ scenario, tickMode, onFinish, onBack }) {
           ) : (
             <Button variant={running ? 'secondary' : 'primary'} size="sm" onClick={handlePauseResume}>
               {running ? '⏸ Pause' : '▶ Resume'}
+            </Button>
+          )}
+          {isDeliberateMode && started && running && (
+            <Button variant="primary" size="sm" onClick={processTick}>
+              ⏭ Next Tick
             </Button>
           )}
           <Button

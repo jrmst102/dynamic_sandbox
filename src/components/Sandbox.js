@@ -10,14 +10,38 @@ import TermsPage from './TermsPage';
 import PrivacyPage from './PrivacyPage';
 import QuickStartPage from './QuickStartPage';
 
+const STATS_KEY = 'dps_scenario_stats';
+
+function loadStats() {
+  try {
+    const raw = localStorage.getItem(STATS_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveStats(stats) {
+  try {
+    localStorage.setItem(STATS_KEY, JSON.stringify(stats));
+  } catch {
+    // localStorage full or unavailable — ignore
+  }
+}
+
 export default function Sandbox() {
   const [screen, setScreen] = useState('menu');
   const [currentLevel, setCurrentLevel] = useState(0);
-  const [scores, setScores] = useState({});
+  const [scenarioStats, setScenarioStats] = useState(loadStats);
   const [gameKey, setGameKey] = useState(0);
   const [finalRevenue, setFinalRevenue] = useState(0);
   const [tickMode, setTickMode] = useState(null);
   const [tickHistory, setTickHistory] = useState([]);
+
+  // Derive scores from stats for unlock logic
+  const scores = Object.fromEntries(
+    Object.entries(scenarioStats).map(([k, v]) => [k, v.bestScore])
+  );
 
   const handleSelectLevel = useCallback((index) => {
     setCurrentLevel(index);
@@ -36,12 +60,18 @@ export default function Sandbox() {
     const scenario = scenarios[currentLevel];
     const { efficiency } = calculateGrade(revenue, scenario.optimalRevenue);
 
-    setScores((prev) => {
-      const prevScore = prev[currentLevel];
-      if (prevScore === undefined || efficiency > prevScore) {
-        return { ...prev, [currentLevel]: efficiency };
-      }
-      return prev;
+    setScenarioStats((prev) => {
+      const existing = prev[currentLevel] || { bestScore: 0, attempts: 0, lastAttempt: null };
+      const updated = {
+        ...prev,
+        [currentLevel]: {
+          bestScore: Math.max(existing.bestScore, efficiency),
+          attempts: existing.attempts + 1,
+          lastAttempt: new Date().toISOString(),
+        },
+      };
+      saveStats(updated);
+      return updated;
     });
 
     setScreen('results');
@@ -75,6 +105,7 @@ export default function Sandbox() {
       return (
         <LevelSelect
           scores={scores}
+          scenarioStats={scenarioStats}
           onSelectLevel={handleSelectLevel}
           onNavigate={handleNavigate}
         />

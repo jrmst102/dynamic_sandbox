@@ -4,9 +4,9 @@ import { promotions } from '../scenarios';
 import { Card, Button } from '@jrmst102/ui-kit';
 
 const TICK_MODES = [
-  { id: 'deliberate', label: 'Deliberate', interval: 300000, desc: '5 min/tick' },
-  { id: 'standard', label: 'Standard', interval: 60000, desc: '60 sec/tick' },
-  { id: 'fast', label: 'Fast', interval: 1200, desc: '1.2 sec/tick' },
+  { id: 'deliberate', label: 'Deliberate', interval: 300000, desc: '5 min/tick · manual advance' },
+  { id: 'standard', label: 'Standard', interval: 60000, desc: '1 min/tick' },
+  { id: 'fast', label: 'Fast (Hard)', interval: 2000, desc: '2 sec/tick' },
 ];
 
 function getElasticityLabel(e) {

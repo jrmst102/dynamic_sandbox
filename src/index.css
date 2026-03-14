@@ -8,3 +8,23 @@
 html {
   font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
 }
+
+/* Print styles for scenario reports */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .print-report, .print-report * {
+    visibility: visible;
+  }
+  .print-report {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 20px 40px;
+  }
+  .no-print {
+    display: none !important;
+  }
+}

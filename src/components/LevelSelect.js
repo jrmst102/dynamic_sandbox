@@ -4,7 +4,7 @@ import { colors } from '../styles';
 import { getGradeColor } from '../engine';
 import { Card, Button } from '@jrmst102/ui-kit';
 
-export default function LevelSelect({ scores, onSelectLevel, onNavigate }) {
+export default function LevelSelect({ scores, scenarioStats, onSelectLevel, onNavigate }) {
   const isUnlocked = (index) => {
     if (index === 0) return true;
     const prevScore = scores[index - 1];
@@ -33,6 +33,7 @@ export default function LevelSelect({ scores, onSelectLevel, onNavigate }) {
             const score = scores[index];
             const hasScore = score !== undefined;
             const gradeInfo = hasScore ? getGradeForScore(score) : null;
+            const stats = scenarioStats ? scenarioStats[index] : null;
 
             return (
               <Card
@@ -66,6 +67,12 @@ export default function LevelSelect({ scores, onSelectLevel, onNavigate }) {
                     <div className="text-xs mt-0.5" style={{ color: colors.textSecondary }}>
                       {scenario.subtitle}
                     </div>
+                    {stats && (
+                      <div className="text-xs mt-1.5 flex gap-3" style={{ color: colors.textSecondary }}>
+                        <span>{stats.attempts} attempt{stats.attempts !== 1 ? 's' : ''}</span>
+                        <span>Last: {new Date(stats.lastAttempt).toLocaleDateString()}</span>
+                      </div>
+                    )}
                   </div>
 
                   {/* Score badge */}

@@ -13,7 +13,7 @@ An educational browser-based simulation for learning dynamic pricing strategy. A
 
 Scenarios unlock sequentially — score 60% pricing efficiency or higher to advance. Optimal revenue benchmarks are calibrated via dynamic programming so that passive play (no price changes) earns a failing grade, while active dynamic pricing with slider alone achieves B+/A.
 
-## Features (v1.1.1)
+## Features (v1.2.0)
 
 - **User Authentication** — Login/logout via `@jrmst102/auth-client` with JWT-based sessions and silent token refresh
 - **Home Page** — Authenticated landing page with app launcher
