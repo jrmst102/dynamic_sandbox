@@ -82,7 +82,7 @@ export default function Sandbox() {
     });
 
     setScreen('results');
-  }, [currentLevel]);
+  }, [currentLevel, userEmail]);
 
   const handleRetry = useCallback(() => {
     setScreen('briefing');
