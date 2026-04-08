@@ -19,6 +19,7 @@ const USERS = [
   { email: 'eem363@nyu.edu', password: 'VioletEagle363', name: 'Erin Mincer', role: 'user' },
   { email: 'np3368@nyu.edu', password: 'BeigeCat3368', name: 'Nya-Gabriella Parchment', role: 'user' },
   { email: 'jdw9540@nyu.edu', password: 'TaupeOwl9540', name: 'Justin Winey', role: 'user' },
+  { email: 'jm10697@nyu.edu', password: 'LimeKoala1!', name: 'Jose Mendoza', role: 'user' },
 ];
 
 /* ── context ────────────────────────────────────────────────── */
