@@ -15,9 +15,8 @@ Scenarios unlock sequentially — score 60% pricing efficiency or higher to adva
 
 ## Features (v1.2.0)
 
-- **User Authentication** — Login/logout with session-based auth; unauthenticated users are redirected to login
-- **Home Page** — Authenticated landing page with app launcher
-- **Protected Routes** — All sandbox routes require authentication
+- **Open Access** — Launch and use the sandbox without a username, password, or account
+- **Home Page** — Landing page with app launcher, quick start guide, help, terms, and privacy information
 - **Scenario Briefing Screens** — Context, objectives, competitor intel, and strategic hints before each challenge
 - **Configurable Tick Pacing** — Deliberate (5 min/tick, manual advance), Standard (1 min/tick), or Fast/Hard (2 sec/tick)
 - **Competitor Price Display** — Scripted competitor pricing shown each tick on the price position indicator and revenue chart
@@ -61,7 +60,6 @@ npm start        # serves the build/ directory on port 8080
 |---------|--------|---------|
 | `@jrmst102/ui-kit` | GitHub Package Registry | Shared UI components |
 | `@jrmst102/shared-config` | GitHub Package Registry | Design tokens and app constants |
-| `@jrmst102/auth-client` | GitHub Package Registry | Authentication provider, hooks, and protected routes |
 | `react`, `react-dom` | npm | UI framework |
 | `react-router-dom` | npm | Client-side routing |
 | `recharts` | npm | Charting library |
@@ -178,13 +176,15 @@ The application is deployed as a Node.js web service on **DigitalOcean App Platf
 
 ```
 src/
-├── App.js                  # Main app — screen routing, state management
+├── App.js                  # Main application routes
 ├── engine.js               # Simulation engine — demand, sales, sentiment, scoring
 ├── scenarios.js            # Scenario configurations, promotions, discount levels
 ├── styles.js               # Shared design tokens from @jrmst102/shared-config
 ├── index.js                # React entry point
 ├── index.css               # Tailwind directives + ui-kit base styles
 └── components/
+    ├── HomePage.js         # Open-access landing page and app launcher
+    ├── Sandbox.js          # Simulation screen flow and browser-local progress
     ├── LevelSelect.js      # Level select menu with unlock state and best scores
     ├── ScenarioBriefing.js  # Pre-scenario briefing with metrics and tick mode selector
     ├── Gameplay.js          # Gameplay screen with visualizations and promotional controls

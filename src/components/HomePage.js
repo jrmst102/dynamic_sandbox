@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useAuth } from '../auth';
 import { useNavigate } from 'react-router-dom';
 import { colors } from '../styles';
 import { Card, Button } from '@jrmst102/ui-kit';
@@ -9,14 +8,8 @@ import TermsPage from './TermsPage';
 import PrivacyPage from './PrivacyPage';
 
 export default function HomePage() {
-  const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [subPage, setSubPage] = useState(null);
-
-  const handleLogout = async () => {
-    await logout();
-    navigate('/login');
-  };
 
   const handleBack = () => setSubPage(null);
 
@@ -29,18 +22,15 @@ export default function HomePage() {
     <div className="min-h-screen" style={{ background: colors.background, fontFamily: "'DM Sans', sans-serif" }}>
       <div className="max-w-3xl mx-auto px-5 py-10">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="mb-8">
           <div>
             <h1 className="text-2xl font-bold" style={{ color: colors.primary }}>
               Dynamic Pricing Sandbox
             </h1>
             <p className="text-sm mt-1" style={{ color: colors.textSecondary }}>
-              Welcome back, {user?.name || 'User'}
+              Learn dynamic pricing through interactive market scenarios.
             </p>
           </div>
-          <Button variant="secondary" size="sm" onClick={handleLogout}>
-            Sign Out
-          </Button>
         </div>
 
         {/* App Card */}

@@ -9,37 +9,30 @@ import HelpPage from './HelpPage';
 import TermsPage from './TermsPage';
 import PrivacyPage from './PrivacyPage';
 import QuickStartPage from './QuickStartPage';
-import { useAuth } from '../auth';
 
-const STATS_PREFIX = 'dps_scenario_stats';
+const STATS_KEY = 'dps_scenario_stats';
 
-function statsKey(email) {
-  return email ? `${STATS_PREFIX}_${email}` : STATS_PREFIX;
-}
-
-function loadStats(email) {
+function loadStats() {
   try {
-    const raw = localStorage.getItem(statsKey(email));
+    const raw = localStorage.getItem(STATS_KEY);
     return raw ? JSON.parse(raw) : {};
   } catch {
     return {};
   }
 }
 
-function saveStats(email, stats) {
+function saveStats(stats) {
   try {
-    localStorage.setItem(statsKey(email), JSON.stringify(stats));
+    localStorage.setItem(STATS_KEY, JSON.stringify(stats));
   } catch {
     // localStorage full or unavailable — ignore
   }
 }
 
 export default function Sandbox() {
-  const { user } = useAuth();
-  const userEmail = user?.email;
   const [screen, setScreen] = useState('menu');
   const [currentLevel, setCurrentLevel] = useState(0);
-  const [scenarioStats, setScenarioStats] = useState(() => loadStats(userEmail));
+  const [scenarioStats, setScenarioStats] = useState(loadStats);
   const [gameKey, setGameKey] = useState(0);
   const [finalRevenue, setFinalRevenue] = useState(0);
   const [tickMode, setTickMode] = useState(null);
@@ -77,12 +70,12 @@ export default function Sandbox() {
           lastAttempt: new Date().toISOString(),
         },
       };
-      saveStats(userEmail, updated);
+      saveStats(updated);
       return updated;
     });
 
     setScreen('results');
-  }, [currentLevel, userEmail]);
+  }, [currentLevel]);
 
   const handleRetry = useCallback(() => {
     setScreen('briefing');
