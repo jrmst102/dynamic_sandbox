@@ -45,6 +45,9 @@ export default function HomePage() {
                 Master the art of dynamic pricing across four industry scenarios.
                 Adjust prices in real time, observe demand shifts, and maximize revenue.
               </p>
+              <p className="text-sm mb-4" style={{ color: colors.textSecondary }}>
+                No account required. Your progress is saved in this browser.
+              </p>
               <Button variant="primary" size="sm" onClick={() => navigate('/pricing')}>
                 Launch
               </Button>

@@ -4,10 +4,12 @@ Welcome to the **Dynamic Pricing Sandbox**, an interactive simulator where you p
 
 ---
 
-## 1. Sign In and Launch
+## 1. Open and Launch
 
-1. Sign in with your account on the login page.
+1. Open the Dynamic Pricing Sandbox. No username, password, or account is required.
 2. From the **Home** screen, click **Launch** to open the pricing simulator.
+
+Your best scores and attempts are saved in this browser. Use the same browser to keep your progress.
 
 ---
 
