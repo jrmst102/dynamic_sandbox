@@ -2,6 +2,16 @@
 
 An educational browser-based simulation for learning dynamic pricing strategy. Adjust prices in real time, observe demand shifts, apply promotional tactics, and maximize revenue across four progressively challenging industry scenarios.
 
+## Competition Demo Access
+
+The competition demo is open access: no username, password, registration, or account is required.
+
+- Open `/` and click **Launch**, or open `/pricing` directly to choose a scenario.
+- Existing `/login` links redirect to the home page.
+- Best scores, attempt counts, and scenario unlocks are saved in the current browser's localStorage. They do not sync between browsers or devices; clearing site data clears this progress.
+
+This deployment is intended for the competition demonstration and is planned to be shut down afterward.
+
 ## Scenarios
 
 | # | Scenario | Context | Elasticity | Demand Base | Inventory | Optimal Revenue |
@@ -60,6 +70,8 @@ npm start        # serves the build/ directory on port 8080
 | `recharts` | npm | Charting library |
 | `tailwindcss` | npm (via react-scripts) | Utility-first CSS framework |
 | `serve` | npm | Static file server (production) |
+
+The app's four shared UI components and design tokens are bundled in `src/ui/`, preserving the existing interface without fetching private packages. See [Bundled UI](src/ui/README.md) for their provenance. The former private UI, configuration, and authentication package dependencies and registry `.npmrc` have been removed.
 
 ## LLM Feedback Setup
 
@@ -135,7 +147,7 @@ Expected result: HTTP 200 with a response body containing `"text":"ok"`.
 
 ## Deployment
 
-The application is deployed as a Node.js web service on **DigitalOcean App Platform**, with auto-deploy on push to `main`. The service builds the React app and serves the `build/` directory with `serve`.
+The application is configured as a Node.js web service on **DigitalOcean App Platform**, with auto-deploy on push to `main`. The service builds the React app and serves the `build/` directory with `serve`. Confirm the latest deployment is active in DigitalOcean before the demonstration; a successful Git push alone does not confirm deployment.
 
 | Setting | Value |
 |---------|-------|
@@ -151,6 +163,21 @@ The application is deployed as a Node.js web service on **DigitalOcean App Platf
 - `NODE_AUTH_TOKEN` is no longer needed. Remove it from App Platform environment variables if it was configured for GitHub Packages.
 - `REACT_APP_LLM_PROXY_URL` must point to the deployed `llm/feedback` function URL.
 - `ANTHROPIC_API_KEY` is required by DigitalOcean Functions and should be managed in `api/.env` before running `doctl serverless deploy api`.
+
+### Troubleshooting the Previous Package Authentication Failure
+
+An `E401` or `E403` error while downloading `@jrmst102/ui-kit` from `npm.pkg.github.com` indicates a build using the former private-package configuration. Deploy the latest `main`, which installs entirely from the public npm registry. A replacement GitHub Packages token is not needed for this app. Remove the obsolete `NODE_AUTH_TOKEN` environment variable and revoke any token exposed in build logs.
+
+### Validation
+
+The dependency fix was verified locally on Node.js 22 with a clean `npm ci` and a successful production build, with `NODE_AUTH_TOKEN` and `GITHUB_TOKEN` unset. A Chromium smoke check passed for anonymous access, launch and briefing, pricing controls, pause/resume, a complete 30-round scenario, saved progress after reload, and the legacy `/login` redirect.
+
+After DigitalOcean deploys the latest commit, check the live app:
+
+1. Open `/` and `/pricing` in a fresh browser session and confirm there is no login prompt.
+2. Launch a scenario, select **Deliberate** pacing, and use **Next Tick** to complete it. Reload `/pricing` and confirm the result was saved.
+3. Open `/login` and confirm it redirects to the home page.
+4. If AI feedback is configured, confirm the deployed proxy returns feedback after a scenario. The local gameplay check did not verify the external AI service.
 
 ## Technology Stack
 
