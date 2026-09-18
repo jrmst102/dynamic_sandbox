@@ -1,6 +1,6 @@
 import React from 'react';
 import { colors } from '../styles';
-import { Card, Button } from '@jrmst102/ui-kit';
+import { Card, Button } from '../ui';
 
 export default function HelpPage({ onBack }) {
   return (

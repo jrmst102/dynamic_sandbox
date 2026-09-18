@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-@import '@jrmst102/ui-kit/styles';
+@import './ui/styles.css';
 
-/* Override ui-kit's Inter font with DM Sans for this app */
+/* Use DM Sans for this app */
 html {
   font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
 }

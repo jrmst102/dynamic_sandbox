@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { colors } from '../styles';
 import { promotions } from '../scenarios';
-import { Card, Button } from '@jrmst102/ui-kit';
+import { Card, Button } from '../ui';
 
 const TICK_MODES = [
   { id: 'deliberate', label: 'Deliberate', interval: 300000, desc: '5 min/tick · manual advance' },

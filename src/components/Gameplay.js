@@ -10,7 +10,7 @@ import {
 } from '../engine';
 import { colors, cardStyle } from '../styles';
 import { promotions, discountLevels } from '../scenarios';
-import { Button, Select } from '@jrmst102/ui-kit';
+import { Button, Select } from '../ui';
 
 export default function Gameplay({ scenario, tickMode, onFinish, onBack }) {
   const tickInterval = tickMode ? tickMode.interval : 2000;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { colors } from '../styles';
-import { Card, Button } from '@jrmst102/ui-kit';
+import { Card, Button } from '../ui';
 import QuickStartPage from './QuickStartPage';
 import HelpPage from './HelpPage';
 import TermsPage from './TermsPage';

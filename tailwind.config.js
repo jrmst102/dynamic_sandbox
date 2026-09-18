@@ -1,10 +1,9 @@
 /** @type {import('tailwindcss').Config} */
-const { colors: tokenColors } = require('@jrmst102/shared-config');
+const { colors: tokenColors } = require('./src/ui/tokens.json');
 
 module.exports = {
   content: [
     './src/**/*.{js,jsx,ts,tsx}',
-    './node_modules/@jrmst102/ui-kit/dist/**/*.{js,jsx}',
   ],
   theme: {
     extend: {
@@ -16,4 +15,3 @@ module.exports = {
   },
   plugins: [],
 }
-

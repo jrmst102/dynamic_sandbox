@@ -1,9 +1,11 @@
 /**
  * Shared style constants for the Dynamic Pricing Sandbox.
- * Uses design tokens from @jrmst102/shared-config.
+ * Uses the bundled design tokens so deployment needs no private registry.
  */
 
-import { colors as tokenColors, shadows, radii } from '@jrmst102/shared-config';
+import tokens from './ui/tokens.json';
+
+const { colors: tokenColors, shadows, radii } = tokens;
 
 const NYU_VIOLET = '#57068c';
 const NYU_VIOLET_DARK = '#3f0468';

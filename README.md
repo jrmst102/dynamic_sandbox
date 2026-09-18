@@ -34,14 +34,10 @@ Scenarios unlock sequentially — score 60% pricing efficiency or higher to adva
 
 **Prerequisites:** Node.js 22.x, npm 10.x
 
-This project uses private packages from the `@jrmst102` GitHub Package Registry scope. Configure access before installing:
+All dependencies install from the public npm registry. No GitHub Packages token is required:
 
 ```bash
-# Set up GitHub Package Registry access
-echo "@jrmst102:registry=https://npm.pkg.github.com" >> .npmrc
-export NODE_AUTH_TOKEN=<your-github-pat>
-
-npm install
+npm ci
 npm run dev
 ```
 
@@ -58,12 +54,11 @@ npm start        # serves the build/ directory on port 8080
 
 | Package | Source | Purpose |
 |---------|--------|---------|
-| `@jrmst102/ui-kit` | GitHub Package Registry | Shared UI components |
-| `@jrmst102/shared-config` | GitHub Package Registry | Design tokens and app constants |
+| `src/ui/` | Bundled with the app | UI components, design tokens, and base styles |
 | `react`, `react-dom` | npm | UI framework |
 | `react-router-dom` | npm | Client-side routing |
 | `recharts` | npm | Charting library |
-| `tailwindcss` | npm | Utility-first CSS framework (required by ui-kit) |
+| `tailwindcss` | npm (via react-scripts) | Utility-first CSS framework |
 | `serve` | npm | Static file server (production) |
 
 ## LLM Feedback Setup
@@ -150,11 +145,10 @@ The application is deployed as a Node.js web service on **DigitalOcean App Platf
 | Build Command | `npm run build` |
 | Run Command | `npm start` |
 | Environment Variable | `REACT_APP_LLM_PROXY_URL` (App-Level) |
-| Environment Variable | `NODE_AUTH_TOKEN` (App-Level, for GitHub Package Registry) |
 
 **Notes:**
 
-- The DigitalOcean App Platform build environment needs `NODE_AUTH_TOKEN` set so `npm install` can fetch `@jrmst102/*` packages from the GitHub Package Registry. The `.npmrc` file in the repo configures the registry scope.
+- `NODE_AUTH_TOKEN` is no longer needed. Remove it from App Platform environment variables if it was configured for GitHub Packages.
 - `REACT_APP_LLM_PROXY_URL` must point to the deployed `llm/feedback` function URL.
 - `ANTHROPIC_API_KEY` is required by DigitalOcean Functions and should be managed in `api/.env` before running `doctl serverless deploy api`.
 
@@ -164,9 +158,9 @@ The application is deployed as a Node.js web service on **DigitalOcean App Platf
 |-------|-----------|
 | Framework | React 19 (functional components, hooks) |
 | Charting | Recharts 3 |
-| UI Components | `@jrmst102/ui-kit` — Button, Card, Select, Spinner (GitHub Package Registry) |
-| Design Tokens | `@jrmst102/shared-config` — colors, shadows, radii (GitHub Package Registry) |
-| CSS Framework | Tailwind CSS 3 with shared-config color palette |
+| UI Components | Bundled Button, Card, Select, Spinner in `src/ui/` |
+| Design Tokens | Bundled colors, shadows, radii in `src/ui/tokens.json` |
+| CSS Framework | Tailwind CSS 3 with the existing color palette |
 | Fonts | DM Sans, DM Mono (Google Fonts CDN) |
 | LLM Integration | Anthropic API (Claude Sonnet 4) via serverless proxy |
 | Hosting | DigitalOcean App Platform |
@@ -179,9 +173,10 @@ src/
 ├── App.js                  # Main application routes
 ├── engine.js               # Simulation engine — demand, sales, sentiment, scoring
 ├── scenarios.js            # Scenario configurations, promotions, discount levels
-├── styles.js               # Shared design tokens from @jrmst102/shared-config
+├── styles.js               # App styles using bundled design tokens
 ├── index.js                # React entry point
-├── index.css               # Tailwind directives + ui-kit base styles
+├── index.css               # Tailwind directives + bundled base styles
+├── ui/                     # Bundled UI components, design tokens, and base styles
 └── components/
     ├── HomePage.js         # Open-access landing page and app launcher
     ├── Sandbox.js          # Simulation screen flow and browser-local progress
@@ -196,8 +191,7 @@ api/
 ├── project.yml             # DigitalOcean Functions config
 └── packages/llm/feedback/
     └── index.js             # Anthropic API proxy function
-.npmrc                       # GitHub Package Registry scope config
-tailwind.config.js           # Tailwind CSS config with shared-config colors
+tailwind.config.js           # Tailwind CSS config with bundled colors
 postcss.config.js            # PostCSS config for Tailwind processing
 ```
 

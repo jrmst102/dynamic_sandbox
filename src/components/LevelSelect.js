@@ -2,7 +2,7 @@ import React from 'react';
 import scenarios from '../scenarios';
 import { colors } from '../styles';
 import { getGradeColor } from '../engine';
-import { Card, Button } from '@jrmst102/ui-kit';
+import { Card, Button } from '../ui';
 
 export default function LevelSelect({ scores, scenarioStats, onSelectLevel, onNavigate }) {
   const isUnlocked = (index) => {

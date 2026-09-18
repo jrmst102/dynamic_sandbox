@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { calculateGrade, getGradeMessage, getGradeColor } from '../engine';
 import { colors } from '../styles';
-import { Button, Card, Spinner } from '@jrmst102/ui-kit';
+import { Button, Card, Spinner } from '../ui';
 
 const LLM_PROXY_URL = process.env.REACT_APP_LLM_PROXY_URL || '';
 
